@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aditya's Chronicles</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js">
+    </script>
+    <style>
+        /* ----- LIGHT THEME (Aditya's Chronicles) ----- */
+        :root {
+            --bg: #f4f7fc;
+            --bg-secondary: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --card-border: rgba(0, 0, 0, 0.06);
+            --card-hover: #ffffff;
+            --primary: #2563eb;
+            --primary-glow: rgba(37, 99, 235, 0.25);
+            --secondary: #0891b2;
+            --accent-green: #16a34a;
+            --accent-green-glow: rgba(22, 163, 74, 0.2);
+            --accent-blue: #2563eb;
+            --accent-blue-glow: rgba(37, 99, 235, 0.2);
+            --accent-purple: #7c3aed;
+            --accent-purple-glow: rgba(124, 58, 237, 0.2);
+            --gold: #d97706;
+            --gold-glow: rgba(217, 119, 6, 0.25);
+            --text: #0b1a2f;
+            --text-secondary: #1e3a5f;
+            --muted: #64748b;
+            --border: rgba(0, 0, 0, 0.07);
+            --glass: rgba(255, 255, 255, 0.5);
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 24px 56px rgba(0, 0, 0, 0.08);
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 20px;
+            --radius-xl: 24px;
+            --transition: 0.25s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* light orbs (soft) */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.20;
+            pointer-events: none;
+            z-index: 0;
+            animation: orbFloat 22s ease-in-out infinite;
+        }
+        .bg-orb.orb-1 {
+            width: 500px;
+            height: 500px;
+            background: #bfdbfe;
+            top: -150px;
+            left: -150px;
+            animation-delay: 0s;
+        }
+        .bg-orb.orb-2 {
+            width: 450px;
+            height: 450px;
+            background: #a7f3d0;
+            bottom: -120px;
+            right: -120px;
+            animation-delay: -7s;
+        }
+        .bg-orb.orb-3 {
+            width: 350px;
+            height: 350px;
+            background: #c7d2fe;
+            top: 40%;
+            left: 60%;
+            animation-delay: -14s;
+        }
+        @keyframes orbFloat {
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(40px, -40px) scale(1.08);
+            }
+            50% {
+                transform: translate(-20px, 30px) scale(0.92);
+            }
+            75% {
+                transform: translate(-50px, -10px) scale(1.04);
+            }
+        }
+
+        .grid-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+            background-size: 56px 56px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .app {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+        }
+
+        .announcement-bar {
+            background: rgba(37, 99, 235, 0.06);
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            backdrop-filter: blur(8px);
+            position: relative;
+            z-index: 10;
+        }
+        .announcement-bar .pulse-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(22, 163, 74, 0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 20px 12px;
+        }
+        .header .icon-wrapper {
+            display: inline-block;
+            position: relative;
+            margin-bottom: 6px;
+        }
+        /* ----- LOGO STYLING (Increased Size) ----- */
+        .header .main-logo {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 3px solid white;
+            display: block;
+        }
+        .header .main-logo:hover {
+            transform: scale(1.05) rotate(-2deg);
+            box-shadow: 0 8px 30px rgba(37, 99, 235, 0.3);
+        }
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 900;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 4px;
+            color: #0b1a2f;
+        }
+        .header h1 .gradient-text {
+            background: linear-gradient(145deg, #1e4ed8 0%, #0d9488 60%, #16a34a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header .tagline {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: 0.2px;
+        }
+        .header .exam-badges {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .exam-badge {
+            padding: 5px 16px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            transition: var(--transition);
+            background: white;
+            box-shadow: var(--shadow-sm);
+        }
+        .exam-badge.neet {
+            background: #dcfce7;
+            color: #15803d;
+            border-color: #bbf7d0;
+        }
+        .exam-badge.jee {
+            background: #dbeafe;
+            color: #1d4ed8;
+            border-color: #bfdbfe;
+        }
+        .exam-badge.boards {
+            background: #fef9c3;
+            color: #a16207;
+            border-color: #fde68a;
+        }
+        .exam-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .header .divider-line {
+            width: 70px;
+            height: 3px;
+            background: linear-gradient(90deg, #2563eb, #0891b2, #16a34a);
+            margin: 12px auto 0;
+            border-radius: 10px;
+        }
+
+        .stats-strip {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            flex-wrap: wrap;
+            padding: 10px 20px 6px;
+            margin: 0 auto;
+            max-width: 700px;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-item .stat-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(145deg, #2563eb, #0d9488);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-item .stat-label {
+            font-size: 0.65rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 600;
+        }
+
+        .page {
+            display: none;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 16px 20px 30px;
+            animation: fadeSlideIn 0.4s ease;
+        }
+        .page.active {
+            display: block;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .section-title h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            color: var(--text);
+        }
+        .section-title p {
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-top: 2px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border-radius: 40px;
+            background: white;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            margin-bottom: 18px;
+            text-decoration: none;
+            box-shadow: var(--shadow-sm);
+        }
+        .back-btn:hover {
+            border-color: var(--primary);
+            background: #f8faff;
+            transform: translateX(-4px);
+            box-shadow: var(--shadow-md);
+            color: var(--primary);
+        }
+
+        /* ===== SUBJECT GRID – 2 columns ===== */
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        @media (max-width: 600px) {
+            .subjects-grid {
+                grid-template-columns: repeat(2, 1fr);
+                max-width: 100%;
+                gap: 14px;
+            }
+        }
+
+        .subject-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-xl);
+            padding: 24px 12px 18px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+            text-decoration: none;
+            color: var(--text);
+            display: block;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .subject-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: transparent;
+            background: white;
+        }
+        .subject-card .card-glow {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .subject-card:hover .card-glow {
+            opacity: 0.15;
+        }
+        .subject-card .icon {
+            font-size: 2.8rem;
+            display: block;
+            margin-bottom: 6px;
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+        }
+        .subject-card:hover .icon {
+            transform: scale(1.08) rotate(-3deg);
+        }
+        .subject-card .class-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 40px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            margin-bottom: 4px;
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.03);
+        }
+        .subject-card h3 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: -0.2px;
+            position: relative;
+            z-index: 1;
+        }
+        .subject-card .chapter-count {
+            font-size: 0.75rem;
+            color: var(--muted);
+            margin-top: 2px;
+            position: relative;
+            z-index: 1;
+        }
+        .subject-card .exam-tag {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 40px;
+            font-size: 0.55rem;
+            font-weight: 700;
+            margin-top: 4px;
+            letter-spacing: 0.2px;
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .card-bio {
+            border-color: rgba(22, 163, 74, 0.15);
+        }
+        .card-bio .card-glow {
+            background: radial-gradient(circle, rgba(22, 163, 74, 0.2) 0%, transparent 70%);
+        }
+        .card-bio:hover {
+            border-color: #86efac;
+        }
+        .card-bio .class-badge {
+            background: #dcfce7;
+            color: #15803d;
+        }
+        .card-bio .exam-tag {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .card-chem {
+            border-color: rgba(8, 145, 178, 0.15);
+        }
+        .card-chem .card-glow {
+            background: radial-gradient(circle, rgba(8, 145, 178, 0.2) 0%, transparent 70%);
+        }
+        .card-chem:hover {
+            border-color: #67e8f9;
+        }
+        .card-chem .class-badge {
+            background: #cffafe;
+            color: #0e7490;
+        }
+        .card-chem .exam-tag {
+            background: #cffafe;
+            color: #0e7490;
+        }
+
+        .card-phy {
+            border-color: rgba(37, 99, 235, 0.15);
+        }
+        .card-phy .card-glow {
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, transparent 70%);
+        }
+        .card-phy:hover {
+            border-color: #93c5fd;
+        }
+        .card-phy .class-badge {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+        .card-phy .exam-tag {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+        .page-header .subject-icon {
+            font-size: 2.4rem;
+            filter: drop-shadow(0 2px 12px rgba(37, 99, 235, 0.15));
+        }
+        .page-header h2 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.2px;
+            color: var(--text);
+        }
+
+        .chapter-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .chapter-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 20px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            color: var(--text);
+            box-shadow: var(--shadow-sm);
+        }
+        .chapter-item:hover {
+            border-color: var(--primary);
+            background: #f8faff;
+            transform: translateX(6px);
+            box-shadow: var(--shadow-md);
+        }
+        .chapter-num {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            letter-spacing: -0.3px;
+        }
+        .num-bio {
+            background: #dcfce7;
+            color: #15803d;
+        }
+        .num-chem {
+            background: #cffafe;
+            color: #0e7490;
+        }
+        .num-phy {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+        .chapter-info {
+            flex: 1;
+        }
+        .chapter-name {
+            font-weight: 700;
+            font-size: 0.92rem;
+        }
+        .file-count-badge {
+            font-size: 0.6rem;
+            padding: 2px 10px;
+            border-radius: 40px;
+            background: #dcfce7;
+            color: #15803d;
+            margin-left: 8px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+        .chapter-arrow {
+            color: var(--muted);
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+        .chapter-item:hover .chapter-arrow {
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .breadcrumb {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .breadcrumb span {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .files-section {
+            margin-bottom: 22px;
+        }
+        .files-section h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+        .files-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .file-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            color: var(--text);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+        .file-card::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            transition: var(--transition);
+        }
+        .file-card:hover {
+            border-color: var(--gold);
+            background: #fffbeb;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .file-card.html-card::after {
+            background: linear-gradient(180deg, #d97706, #ea580c);
+        }
+        .file-card.pdf-card::after {
+            background: linear-gradient(180deg, #dc2626, #b91c1c);
+        }
+        .file-card .file-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+        .file-card .file-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .file-card .file-title {
+            font-weight: 700;
+            font-size: 0.88rem;
+            letter-spacing: -0.1px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .file-card .file-meta {
+            font-size: 0.7rem;
+            color: var(--muted);
+            margin-top: 1px;
+            display: flex;
+            gap: 10px;
+        }
+        .file-badge {
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+        .badge-html {
+            background: #fef3c7;
+            color: #b45309;
+        }
+        .badge-pdf {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+        .file-card.no-file {
+            opacity: 0.4;
+            cursor: default;
+            filter: grayscale(0.3);
+        }
+        .file-card.no-file:hover {
+            transform: none;
+            box-shadow: var(--shadow-sm);
+            border-color: var(--border);
+            background: white;
+        }
+        .no-files-msg {
+            text-align: center;
+            padding: 16px;
+            color: var(--muted);
+            font-size: 0.85rem;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px dashed var(--border);
+        }
+
+        /* ----- SOCIAL BUTTONS (Footer) ----- */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            border: 1px solid transparent;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(4px);
+            color: var(--text);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            color: white;
+        }
+
+        .social-btn .social-icon {
+            font-size: 1.1rem;
+            line-height: 1;
+        }
+
+        /* Individual Brand Colors */
+        .social-btn.youtube:hover {
+            background: #ff0000;
+            border-color: #ff0000;
+            color: white;
+        }
+        .social-btn.telegram:hover {
+            background: #0088cc;
+            border-color: #0088cc;
+            color: white;
+        }
+        .social-btn.instagram:hover {
+            background: #e4405f;
+            border-color: #e4405f;
+            color: white;
+        }
+        .social-btn.whatsapp:hover {
+            background: #25d366;
+            border-color: #25d366;
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 28px 20px 18px;
+            margin-top: 40px;
+            border-top: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(4px);
+            border-radius: var(--radius-lg);
+        }
+        .footer p {
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+        .footer .footer-links {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 6px;
+        }
+        .footer .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.76rem;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        .footer .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 40px;
+        }
+        .spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            margin: 0 auto 10px;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .loading-text {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 20px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* ===== YOUTUBE SUBSCRIBE POPUP ===== */
+        .yt-popup-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(11, 26, 47, 0.55);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            padding: 20px;
+        }
+        .yt-popup-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .yt-popup {
+            background: #ffffff;
+            border-radius: var(--radius-xl);
+            max-width: 380px;
+            width: 100%;
+            padding: 32px 26px 26px;
+            text-align: center;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.25);
+            position: relative;
+            transform: translateY(18px) scale(0.96);
+            transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+        }
+        .yt-popup-overlay.show .yt-popup {
+            transform: translateY(0) scale(1);
+        }
+        .yt-popup .yt-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: #ff0000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+            box-shadow: 0 8px 24px rgba(255, 0, 0, 0.35);
+        }
+        .yt-popup .yt-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: #ffffff;
+            margin-left: 3px;
+        }
+        .yt-popup h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text);
+            letter-spacing: -0.2px;
+            margin-bottom: 6px;
+        }
+        .yt-popup p {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .yt-popup .yt-subscribe-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 40px;
+            background: #ff0000;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.3);
+        }
+        .yt-popup .yt-subscribe-btn:hover {
+            background: #cc0000;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 26px rgba(255, 0, 0, 0.4);
+        }
+        .yt-popup .yt-close-btn {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px 20px;
+            border-radius: 40px;
+            background: transparent;
+            color: var(--muted);
+            font-weight: 600;
+            font-size: 0.8rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .yt-popup .yt-close-btn:hover {
+            color: var(--text);
+            background: rgba(0, 0, 0, 0.04);
+        }
+        .yt-popup .yt-popup-close-x {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(0, 0, 0, 0.04);
+            color: var(--muted);
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            line-height: 1;
+            font-family: inherit;
+        }
+        .yt-popup .yt-popup-close-x:hover {
+            background: rgba(0, 0, 0, 0.1);
+            color: var(--text);
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            .header .main-logo {
+                width: 80px;
+                height: 80px;
+            }
+            .header .tagline {
+                font-size: 0.9rem;
+            }
+            .exam-badge {
+                font-size: 0.6rem;
+                padding: 4px 12px;
+            }
+            .stats-strip {
+                gap: 10px;
+                padding: 8px 10px;
+            }
+            .stat-item .stat-number {
+                font-size: 1.2rem;
+            }
+            .stat-item .stat-label {
+                font-size: 0.6rem;
+            }
+            .subject-card {
+                padding: 16px 8px 14px;
+                border-radius: var(--radius-lg);
+            }
+            .subject-card .icon {
+                font-size: 2.2rem;
+            }
+            .subject-card h3 {
+                font-size: 0.9rem;
+            }
+            .subject-card .class-badge {
+                font-size: 0.55rem;
+                padding: 2px 10px;
+            }
+            .subject-card .chapter-count {
+                font-size: 0.65rem;
+            }
+            .subject-card .exam-tag {
+                font-size: 0.5rem;
+                padding: 2px 8px;
+            }
+            .section-title h2 {
+                font-size: 1.3rem;
+            }
+            .page {
+                padding: 12px 12px 20px;
+            }
+            .back-btn {
+                font-size: 0.75rem;
+                padding: 6px 16px;
+            }
+            .page-header h2 {
+                font-size: 1.1rem;
+            }
+            .page-header .subject-icon {
+                font-size: 1.8rem;
+            }
+            .chapter-item {
+                padding: 12px 14px;
+                gap: 10px;
+            }
+            .chapter-num {
+                width: 32px;
+                height: 32px;
+                font-size: 0.75rem;
+            }
+            .chapter-name {
+                font-size: 0.8rem;
+            }
+            .file-card {
+                padding: 12px 14px;
+                gap: 10px;
+            }
+            .file-card .file-icon {
+                font-size: 1.6rem;
+            }
+            .file-card .file-title {
+                font-size: 0.78rem;
+            }
+            .file-badge {
+                font-size: 0.55rem;
+                padding: 3px 10px;
+            }
+            .files-section h3 {
+                font-size: 0.85rem;
+            }
+            .footer p {
+                font-size: 0.65rem;
+            }
+            .social-btn {
+                padding: 6px 14px;
+                font-size: 0.7rem;
+                gap: 4px;
+            }
+            .social-btn .social-icon {
+                font-size: 0.9rem;
+            }
+            .yt-popup {
+                padding: 26px 20px 20px;
+            }
+            .yt-popup h3 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- soft light orbs -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+    <div class="grid-pattern"></div>
+
+    <div class="app">
+        <!-- Updated Announcement Bar -->
+        <div class="announcement-bar">
+            <span class="pulse-dot"></span>
+            <strong>Aditya's Chronicles</strong> — Free study sessions, practice & PDF notes for NEET, JEE & CBSE 2027
+        </div>
+
+        <div class="header">
+            <div class="icon-wrapper">
+                <a href="#" onclick="goHome()" aria-label="Aditya's Chronicles Home">
+                    <img 
+                        src="https://yt3.googleusercontent.com/FzSAOpFaOKkqMw8Y2JG-7HwXqj743Zdszi4XVmwIwnKtbmMAGTUrb_0Pn-J7-idUWDxYAtY0Q6o=s160-c-k-c0x00ffffff-no-rj" 
+                        alt="Aditya's Chronicles Logo" 
+                        class="main-logo"
+                        onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%A9%BA%3C/text%3E%3C/svg%3E';"
+                    />
+                </a>
+            </div>
+            <h1><span class="gradient-text">Aditya's Chronicles</span></h1>
+            <p class="tagline">Clear concepts · Crack exams · 2027</p>
+            <div class="exam-badges">
+                <span class="exam-badge neet">🎯 NEET 2027</span>
+                <span class="exam-badge jee">⚡ JEE Main & Advanced</span>
+                <span class="exam-badge boards">📋 CBSE Boards</span>
+            </div>
+            <div class="divider-line"></div>
+        </div>
+
+        <div class="stats-strip">
+            <div class="stat-item"><div class="stat-number">6</div><div class="stat-label">Subjects</div></div>
+            <div class="stat-item"><div class="stat-number">97</div><div class="stat-label">Chapters</div></div>
+            <div class="stat-item"><div class="stat-number">FREE</div><div class="stat-label">Forever</div></div>
+            <div class="stat-item"><div class="stat-number">2027</div><div class="stat-label">Target</div></div>
+        </div>
+
+        <!-- ===== HOME PAGE ===== -->
+        <div class="page active" id="homePage">
+            <div class="section-title">
+                <h2>📖 Select your subject</h2>
+                <p>Click any card to explore chapters & study materials</p>
+            </div>
+
+            <div class="subjects-grid">
+                <!-- Row 1: Biology 11th | Biology 12th -->
+                <a href="#" class="subject-card card-bio" onclick="showChapters('11th-Biology')">
+                    <div class="card-glow"></div>
+                    <span class="icon">🧬</span>
+                    <span class="class-badge">Class 11th</span>
+                    <h3>Biology</h3>
+                    <p class="chapter-count">22 Chapters</p>
+                    <span class="exam-tag">🎯 NEET</span>
+                </a>
+                <a href="#" class="subject-card card-bio" onclick="showChapters('12th-Biology')">
+                    <div class="card-glow"></div>
+                    <span class="icon">🔬</span>
+                    <span class="class-badge">Class 12th</span>
+                    <h3>Biology</h3>
+                    <p class="chapter-count">16 Chapters</p>
+                    <span class="exam-tag">🎯 NEET</span>
+                </a>
+
+                <!-- Row 2: Chemistry 11th | Chemistry 12th -->
+                <a href="#" class="subject-card card-chem" onclick="showChapters('11th-Chemistry')">
+                    <div class="card-glow"></div>
+                    <span class="icon">⚗️</span>
+                    <span class="class-badge">Class 11th</span>
+                    <h3>Chemistry</h3>
+                    <p class="chapter-count">14 Chapters</p>
+                    <span class="exam-tag">⚡ JEE + 🎯 NEET</span>
+                </a>
+                <a href="#" class="subject-card card-chem" onclick="showChapters('12th-Chemistry')">
+                    <div class="card-glow"></div>
+                    <span class="icon">🧪</span>
+                    <span class="class-badge">Class 12th</span>
+                    <h3>Chemistry</h3>
+                    <p class="chapter-count">16 Chapters</p>
+                    <span class="exam-tag">⚡ JEE + 🎯 NEET</span>
+                </a>
+
+                <!-- Row 3: Physics 11th | Physics 12th -->
+                <a href="#" class="subject-card card-phy" onclick="showChapters('11th-Physics')">
+                    <div class="card-glow"></div>
+                    <span class="icon">⚡</span>
+                    <span class="class-badge">Class 11th</span>
+                    <h3>Physics</h3>
+                    <p class="chapter-count">15 Chapters</p>
+                    <span class="exam-tag">⚡ JEE + 🎯 NEET</span>
+                </a>
+                <a href="#" class="subject-card card-phy" onclick="showChapters('12th-Physics')">
+                    <div class="card-glow"></div>
+                    <span class="icon">🔭</span>
+                    <span class="class-badge">Class 12th</span>
+                    <h3>Physics</h3>
+                    <p class="chapter-count">14 Chapters</p>
+                    <span class="exam-tag">⚡ JEE + 🎯 NEET</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- ===== CHAPTERS PAGE ===== -->
+        <div class="page" id="chapterPage">
+            <a href="#" class="back-btn" onclick="goHome()">← Back to Home</a>
+            <div class="page-header"><span class="subject-icon" id="chapterIcon"></span><h2 id="chapterTitle"></h2></div>
+            <div class="chapter-list" id="chapterList"><div class="loading-spinner"><div class="spinner"></div><p class="loading-text">Loading chapters…</p></div></div>
+        </div>
+
+        <!-- ===== FILES PAGE ===== -->
+        <div class="page" id="filesPage">
+            <a href="#" class="back-btn" onclick="goBackToChapters()">← Back to Chapters</a>
+            <div class="breadcrumb" id="breadcrumb"></div>
+            <div class="page-header"><span class="subject-icon">📄</span><h2 id="filesTitle"></h2></div>
+            <div id="filesContainer"><div class="loading-spinner"><div class="spinner"></div><p class="loading-text">Loading files…</p></div></div>
+        </div>
+
+        <div class="footer">
+            <!-- Social Media Links -->
+            <div class="social-links">
+                <a href="https://youtube.com/@adityas_chronicles?si=daa4kZ_OTSPUNebO" target="_blank" class="social-btn youtube" aria-label="YouTube">
+                    <span class="social-icon">▶</span> YouTube
+                </a>
+                <a href="https://t.me/AdityasChronicles" target="_blank" class="social-btn telegram" aria-label="Telegram">
+                    <span class="social-icon">✈</span> Telegram
+                </a>
+                <a href="https://www.instagram.com/ai2aditya?stkn=MW95cmh2dHpqaGd0aw==" target="_blank" class="social-btn instagram" aria-label="Instagram">
+                    <span class="social-icon">📸</span> Instagram
+                </a>
+                <a href="https://whatsapp.com/channel/0029Vb9NYS2A2pL68kRued2P" target="_blank" class="social-btn whatsapp" aria-label="WhatsApp">
+                    <span class="social-icon">💬</span> WhatsApp
+                </a>
+            </div>
+            
+            <p>© 2026 Aditya's Chronicles · Light theme · Made for 2027 aspirants. All materials for educational use.</p>
+            <div class="footer-links">
+                <a href="#">About</a><a href="#">Contact</a><a href="#">Privacy</a><a href="#">Terms</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== YOUTUBE SUBSCRIBE POPUP ===== -->
+    <div class="yt-popup-overlay" id="ytPopupOverlay">
+        <div class="yt-popup">
+            <button class="yt-popup-close-x" onclick="closeYtPopup()" aria-label="Close">✕</button>
+            <div class="yt-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+            </div>
+            <h3>Subscribe to Aditya's Chronicles</h3>
+            <p>Get free study sessions, practice & PDF notes for NEET, JEE & CBSE 2027.</p>
+            <a href="https://youtube.com/@adityas_chronicles?si=daa4kZ_OTSPUNebO" target="_blank" class="yt-subscribe-btn" onclick="closeYtPopup()">
+                ▶ Subscribe on YouTube
+            </a>
+            <button class="yt-close-btn" onclick="closeYtPopup()">Maybe Later</button>
+        </div>
+    </div>
+
+    <script>
+        // ============ FIREBASE CONFIG ============
+        const firebaseConfig = {
+  apiKey: "AIzaSyD4RVjhyV0EUAdJqY23h5o6Cz84z0FMQgQ",
+  authDomain: "aditya-s-chronicles.firebaseapp.com",
+  projectId: "aditya-s-chronicles",
+  storageBucket: "aditya-s-chronicles.firebasestorage.app",
+  messagingSenderId: "334563898395",
+  appId: "1:334563898395:web:bc1a7e7322661ea743b4be"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+        // ============ SUBJECTS DATA ============
+        const subjects = {
+            '11th-Biology': { class: '11th', subject: 'Biology', icon: '🧬', color: 'bio', chapters: ['The Living World', 'Biological Classification', 'Plant Kingdom', 'Animal Kingdom', 'Morphology of Flowering Plants', 'Anatomy of Flowering Plants', 'Structural Organisation in Animals', 'Cell: The Unit of Life', 'Biomolecules', 'Cell Cycle and Cell Division', 'Photosynthesis in Higher Plants', 'Respiration in Plants', 'Plant Growth and Development', 'Breathing and Exchange of Gases', 'Body Fluids and Circulation', 'Excretory Products and Elimination', 'Locomotion and Movement', 'Neural Control and Coordination', 'Chemical Coordination and Integration', 'Digestion and Absorption', 'Mineral Nutrition', 'Transport in Plants'] },
+            '12th-Biology': { class: '12th', subject: 'Biology', icon: '🔬', color: 'bio', chapters: ['Reproduction in Organisms', 'Sexual Reproduction in Flowering Plants', 'Human Reproduction', 'Reproductive Health', 'Principles of Inheritance and Variation', 'Molecular Basis of Inheritance', 'Evolution', 'Human Health and Disease', 'Strategies for Enhancement in Food Production', 'Microbes in Human Welfare', 'Biotechnology: Principles and Processes', 'Biotechnology and Its Applications', 'Organisms and Populations', 'Ecosystem', 'Biodiversity and Conservation', 'Environmental Issues'] },
+            '11th-Chemistry': { class: '11th', subject: 'Chemistry', icon: '⚗️', color: 'chem', chapters: ['Some Basic Concepts of Chemistry', 'Structure of Atom', 'Classification of Elements and Periodicity', 'Chemical Bonding and Molecular Structure', 'States of Matter', 'Thermodynamics', 'Equilibrium', 'Redox Reactions', 'Hydrogen', 'The s-Block Elements', 'The p-Block Elements', 'Organic Chemistry - Basic Principles', 'Hydrocarbons', 'Environmental Chemistry'] },
+            '12th-Chemistry': { class: '12th', subject: 'Chemistry', icon: '🧪', color: 'chem', chapters: ['The Solid State', 'Solutions', 'Electrochemistry', 'Chemical Kinetics', 'Surface Chemistry', 'General Principles of Metallurgy', 'The p-Block Elements', 'The d and f Block Elements', 'Coordination Compounds', 'Haloalkanes and Haloarenes', 'Alcohols, Phenols and Ethers', 'Aldehydes, Ketones and Carboxylic Acids', 'Amines', 'Biomolecules', 'Polymers', 'Chemistry in Everyday Life'] },
+            '11th-Physics': { class: '11th', subject: 'Physics', icon: '⚡', color: 'phy', chapters: ['Physical World', 'Units and Measurements', 'Motion in a Straight Line', 'Motion in a Plane', 'Laws of Motion', 'Work, Energy and Power', 'System of Particles and Rotational Motion', 'Gravitation', 'Mechanical Properties of Solids', 'Mechanical Properties of Fluids', 'Thermal Properties of Matter', 'Thermodynamics', 'Kinetic Theory', 'Oscillations', 'Waves'] },
+            '12th-Physics': { class: '12th', subject: 'Physics', icon: '🔭', color: 'phy', chapters: ['Electric Charges and Fields', 'Electrostatic Potential and Capacitance', 'Current Electricity', 'Moving Charges and Magnetism', 'Magnetism and Matter', 'Electromagnetic Induction', 'Alternating Current', 'Electromagnetic Waves', 'Ray Optics and Optical Instruments', 'Wave Optics', 'Dual Nature of Radiation and Matter', 'Atoms', 'Nuclei', 'Semiconductor Electronics'] }
+        };
+
+        let currentSubjectKey = '';
+        let currentChapterIndex = -1;
+
+        // ============ NAVIGATION ============
+        function goTo(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goHome() {
+            goTo('homePage');
+        }
+
+        // ============ SHOW CHAPTERS ============
+        async function showChapters(subjectKey) {
+            currentSubjectKey = subjectKey;
+            const data = subjects[subjectKey];
+            document.getElementById('chapterIcon').textContent = data.icon;
+            document.getElementById('chapterTitle').textContent = `Class ${data.class} · ${data.subject}`;
+            document.getElementById('chapterList').innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p class="loading-text">Loading chapters…</p></div>';
+            goTo('chapterPage');
+
+            const numClass = 'num-' + data.color;
+            const list = document.getElementById('chapterList');
+
+            try {
+                const snapshot = await db.collection('files')
+                    .where('subjectKey', '==', subjectKey).get();
+
+                const chapterFileCount = {};
+                snapshot.forEach(doc => {
+                    const d = doc.data();
+                    const key = d.subjectKey + '-' + d.chapterIndex;
+                    if (!chapterFileCount[key]) chapterFileCount[key] = 0;
+                    chapterFileCount[key]++;
+                });
+
+                list.innerHTML = data.chapters.map((chapter, index) => {
+                    const key = subjectKey + '-' + index;
+                    const count = chapterFileCount[key] || 0;
+                    const badge = count > 0 ? `<span class="file-count-badge">📁 ${count} file${count > 1 ? 's' : ''}</span>` : '';
+                    return `
+                    <a href="#" class="chapter-item" onclick="showFiles('${subjectKey}', ${index})">
+                        <div class="chapter-num ${numClass}">${String(index + 1).padStart(2, '0')}</div>
+                        <div class="chapter-info"><div class="chapter-name">${chapter} ${badge}</div></div>
+                        <span class="chapter-arrow">→</span>
+                    </a>`;
+                }).join('');
+            } catch (err) {
+                console.error('Error loading chapters:', err);
+                list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">⚠️ Could not load chapters. Please try again.</div>';
+            }
+        }
+
+        function goBackToChapters() { if (currentSubjectKey) showChapters(currentSubjectKey); }
+
+        // ============ SHOW FILES ============
+        async function showFiles(subjectKey, chapterIndex) {
+            currentChapterIndex = chapterIndex;
+            const data = subjects[subjectKey];
+            const chapterName = data.chapters[chapterIndex];
+            document.getElementById('breadcrumb').innerHTML = `${data.subject} <span>→</span> <span>${chapterName}</span>`;
+            document.getElementById('filesTitle').textContent = chapterName;
+            document.getElementById('filesContainer').innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p class="loading-text">Loading files…</p></div>';
+            goTo('filesPage');
+
+            try {
+                const snapshot = await db.collection('files')
+                    .where('subjectKey', '==', subjectKey)
+                    .where('chapterIndex', '==', chapterIndex)
+                    .get();
+
+                const htmlFiles = [];
+                const pdfFiles = [];
+
+                snapshot.forEach(doc => {
+                    const f = doc.data();
+                    f.docId = doc.id;
+                    if (f.fileType === 'html') htmlFiles.push(f);
+                    else pdfFiles.push(f);
+                });
+
+                const sortFn = (a, b) => (b.uploadedAt?.seconds || 0) - (a.uploadedAt?.seconds || 0);
+                htmlFiles.sort(sortFn);
+                pdfFiles.sort(sortFn);
+
+                let html = '';
+
+                html += `<div class="files-section"><h3>🟢 Interactive Sessions</h3><div class="files-list">`;
+                if (htmlFiles.length > 0) {
+                    htmlFiles.forEach(f => {
+                        const displayName = removeExtension(f.name);
+                        html += `
+                        <a href="#" class="file-card html-card" onclick="openHTMLFullscreen('${f.docId}')">
+                            <span class="file-icon">🟢</span>
+                            <div class="file-info"><div class="file-title">${displayName}</div><div class="file-meta"><span>${formatSize(f.size)}</span></div></div>
+                            <span class="file-badge badge-html">▶ RUN</span>
+                        </a>`;
+                    });
+                } else {
+                    html += `<div class="no-files-msg">No interactive sessions yet</div>`;
+                }
+                html += `</div></div>`;
+
+                html += `<div class="files-section"><h3>📕 PDF Notes</h3><div class="files-list">`;
+                if (pdfFiles.length > 0) {
+                    pdfFiles.forEach(f => {
+                        const displayName = removeExtension(f.name);
+                        html += `
+                        <a href="#" class="file-card pdf-card" onclick="openPDFFullscreen('${f.docId}')">
+                            <span class="file-icon">📕</span>
+                            <div class="file-info"><div class="file-title">${displayName}</div><div class="file-meta"><span>${formatSize(f.size)}</span></div></div>
+                            <span class="file-badge badge-pdf">▶ VIEW</span>
+                        </a>`;
+                    });
+                } else {
+                    html += `<div class="no-files-msg">No PDF notes uploaded</div>`;
+                }
+                html += `</div></div>`;
+
+                document.getElementById('filesContainer').innerHTML = html;
+            } catch (err) {
+                console.error('Error loading files:', err);
+                document.getElementById('filesContainer').innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">⚠️ Could not load files. Please try again.</div>';
+            }
+        }
+
+        // ============ OPEN HTML FULLSCREEN (NO DOWNLOAD) ============
+        async function openHTMLFullscreen(docId) {
+            try {
+                const doc = await db.collection('files').doc(docId).get();
+                if (!doc.exists) { alert('❌ File not found'); return; }
+                const file = doc.data();
+                if (!file.fileContent) { alert('❌ Content unavailable'); return; }
+
+                const base64Response = await fetch(file.fileContent);
+                const blob = await base64Response.blob();
+                const blobUrl = URL.createObjectURL(blob);
+                const newTab = window.open(blobUrl, '_blank');
+                if (newTab) {
+                    newTab.addEventListener('load', () => setTimeout(() => URL.revokeObjectURL(blobUrl), 5000));
+                } else {
+                    alert('⚠️ Please allow popups to run interactive sessions.');
+                    URL.revokeObjectURL(blobUrl);
+                }
+            } catch (err) {
+                console.error(err);
+                alert('❌ Failed to open: ' + err.message);
+            }
+        }
+
+        // ============ OPEN PDF FULLSCREEN ============
+        async function openPDFFullscreen(docId) {
+            try {
+                const doc = await db.collection('files').doc(docId).get();
+                if (!doc.exists) { alert('❌ File not found'); return; }
+                const file = doc.data();
+                if (!file.fileContent) { alert('❌ Content unavailable'); return; }
+                window.open(file.fileContent, '_blank');
+            } catch (err) {
+                console.error(err);
+                alert('❌ Failed to open: ' + err.message);
+            }
+        }
+
+        // ============ UTILS ============
+        function removeExtension(filename) {
+            if (!filename) return '';
+            return filename.replace(/\.(html|htm|pdf)$/i, '');
+        }
+
+        function formatSize(bytes) {
+            if (!bytes) return '0 B';
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+
+        // ============ YOUTUBE POPUP ============
+        function closeYtPopup() {
+            document.getElementById('ytPopupOverlay').classList.remove('show');
+        }
+
+        // Show popup on every page load
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('ytPopupOverlay').classList.add('show');
+            }, 800);
+        });
+
+        // Close on overlay click (outside popup)
+        document.getElementById('ytPopupOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeYtPopup();
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeYtPopup();
+        });
+
+        // ============ ANTI-DOWNLOAD (HTML only) ============
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.closest('.file-card.html-card')) {
+                e.preventDefault();
+                alert('❌ Download not allowed. Interactive sessions can only be run.');
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 's' || e.key === 'S' || e.key === 'u' || e.key === 'U')) {
+                e.preventDefault();
+                alert('❌ Download not allowed.');
+            }
+            if (e.key === 'F12') {
+                e.preventDefault();
+                alert('❌ Developer tools disabled.');
+            }
+        });
+
+        console.log('🩺 Aditya\'s Chronicles · Light theme ready');
+        console.log('🎯 NEET | JEE | CBSE 2027');
+        console.log('📁 Firestore collection: "files" with fields: subjectKey, chapterIndex, fileType, name, fileContent, size, uploadedAt');
+    </script>
+</body>
+</html>
