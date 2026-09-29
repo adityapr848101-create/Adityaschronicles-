@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terms & Conditions · Aditya's Chronicles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #f4f7fc;
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --card-border: rgba(0, 0, 0, 0.06);
+            --primary: #2563eb;
+            --accent-green: #16a34a;
+            --text: #0b1a2f;
+            --text-secondary: #1e3a5f;
+            --muted: #64748b;
+            --border: rgba(0, 0, 0, 0.07);
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 24px 56px rgba(0, 0, 0, 0.08);
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 20px;
+            --radius-xl: 24px;
+            --transition: 0.25s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            padding: 0 0 40px;
+        }
+
+        /* light orbs */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.20;
+            pointer-events: none;
+            z-index: 0;
+            animation: orbFloat 22s ease-in-out infinite;
+        }
+        .bg-orb.orb-1 { width: 500px; height: 500px; background: #bfdbfe; top: -150px; left: -150px; }
+        .bg-orb.orb-2 { width: 450px; height: 450px; background: #a7f3d0; bottom: -120px; right: -120px; animation-delay: -7s; }
+        .bg-orb.orb-3 { width: 350px; height: 350px; background: #c7d2fe; top: 40%; left: 60%; animation-delay: -14s; }
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(40px, -40px) scale(1.08); }
+            50% { transform: translate(-20px, 30px) scale(0.92); }
+            75% { transform: translate(-50px, -10px) scale(1.04); }
+        }
+        .grid-pattern {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+            background-size: 56px 56px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .app { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+
+        /* ===== HEADER ===== */
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border-radius: 40px;
+            background: white;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            text-decoration: none;
+            box-shadow: var(--shadow-sm);
+            font-family: inherit;
+        }
+        .back-btn:hover {
+            border-color: var(--primary);
+            background: #f8faff;
+            transform: translateX(-4px);
+            box-shadow: var(--shadow-md);
+            color: var(--primary);
+        }
+
+        .title-block {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 18px 0 24px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--border);
+        }
+        .title-block .icon {
+            font-size: 2.4rem;
+            filter: drop-shadow(0 2px 12px rgba(37, 99, 235, 0.15));
+        }
+        .title-block h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            color: var(--text);
+            line-height: 1.2;
+        }
+        .title-block p {
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-style: italic;
+            margin-top: 2px;
+        }
+
+        /* ===== TERMS CONTENT ===== */
+        .terms-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 32px 28px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+        }
+        .terms-card h3 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-top: 24px;
+            margin-bottom: 10px;
+            letter-spacing: -0.2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .terms-card h3:first-child { margin-top: 0; }
+        .terms-card h3 .num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 8px;
+            background: #dbeafe;
+            color: #1d4ed8;
+            font-size: 0.75rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        .terms-card p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            margin-bottom: 12px;
+        }
+        .terms-card ul {
+            padding-left: 20px;
+            margin-bottom: 14px;
+        }
+        .terms-card ul li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            margin-bottom: 6px;
+        }
+        .terms-card a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .terms-card a:hover { text-decoration: underline; }
+
+        /* Highlight box - AI disclaimer */
+        .highlight-box {
+            background: linear-gradient(145deg, #fef9c3, #fef3c7);
+            border-left: 4px solid #d97706;
+            border-radius: var(--radius-sm);
+            padding: 18px 20px;
+            margin: 14px 0;
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.08);
+        }
+        .highlight-box .hb-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #78350f;
+            margin-bottom: 10px;
+        }
+        .highlight-box p {
+            color: #78350f;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .highlight-box ul li {
+            color: #78350f;
+            font-weight: 500;
+        }
+        .highlight-box ul li strong { color: #7c2d12; }
+
+        /* Warning box - red */
+        .warning-box {
+            background: linear-gradient(145deg, #fee2e2, #fecaca);
+            border-left: 4px solid #dc2626;
+            border-radius: var(--radius-sm);
+            padding: 18px 20px;
+            margin: 14px 0;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.08);
+        }
+        .warning-box .wb-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #7f1d1d;
+            margin-bottom: 10px;
+        }
+        .warning-box p {
+            color: #7f1d1d;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .warning-box ul li {
+            color: #7f1d1d;
+            font-weight: 500;
+        }
+
+        /* Info box - blue */
+        .info-box {
+            background: linear-gradient(145deg, #dbeafe, #bfdbfe);
+            border-left: 4px solid #2563eb;
+            border-radius: var(--radius-sm);
+            padding: 18px 20px;
+            margin: 14px 0;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+        }
+        .info-box .ib-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #1e3a8a;
+            margin-bottom: 10px;
+        }
+        .info-box p {
+            color: #1e3a8a;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .last-updated {
+            display: inline-block;
+            font-size: 0.72rem;
+            color: var(--muted);
+            background: #f1f5f9;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        .footer-note {
+            margin-top: 28px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* Footer social */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 32px;
+        }
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.6);
+            color: var(--text);
+            box-shadow: var(--shadow-sm);
+        }
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            color: white;
+        }
+        .social-btn.youtube:hover { background: #ff0000; border-color: #ff0000; }
+        .social-btn.telegram:hover { background: #0088cc; border-color: #0088cc; }
+        .social-btn.instagram:hover { background: #e4405f; border-color: #e4405f; }
+        .social-btn.whatsapp:hover { background: #25d366; border-color: #25d366; }
+
+        .copyright {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        /* Mobile */
+        @media (max-width: 480px) {
+            .app { padding: 16px 14px; }
+            .title-block h1 { font-size: 1.4rem; }
+            .title-block .icon { font-size: 1.9rem; }
+            .terms-card { padding: 22px 18px; border-radius: var(--radius-md); }
+            .terms-card h3 { font-size: 0.95rem; }
+            .terms-card p, .terms-card ul li { font-size: 0.82rem; }
+            .highlight-box, .warning-box, .info-box { padding: 14px 16px; }
+            .highlight-box .hb-title, .warning-box .wb-title, .info-box .ib-title { font-size: 0.88rem; }
+            .social-btn { padding: 6px 14px; font-size: 0.72rem; }
+            .back-btn { font-size: 0.78rem; padding: 6px 16px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background effects -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+    <div class="grid-pattern"></div>
+
+    <div class="app">
+        <!-- Back button -->
+        <a href="index.html" class="back-btn">← Back to Home</a>
+
+        <!-- Title -->
+        <div class="title-block">
+            <span class="icon">📋</span>
+            <div>
+                <h1>Terms & Conditions</h1>
+                <p>Aditya's Chronicles — Rules of use</p>
+            </div>
+        </div>
+
+        <!-- Terms content -->
+        <div class="terms-card">
+            <span class="last-updated">📅 Last updated: January 2026</span>
+
+            <h3><span class="num">1</span> Acceptance of Terms</h3>
+            <p>
+                By accessing or using <strong>Aditya's Chronicles</strong>, you agree to be bound by these Terms & Conditions. If you do not agree with any part of these terms, please do not use our website.
+            </p>
+
+            <h3><span class="num">2</span> About Our Service</h3>
+            <p>
+                Aditya's Chronicles is a <strong>free educational platform</strong> that provides:
+            </p>
+            <ul>
+                <li>Study notes and PDF materials for NEET, JEE, and CBSE exams</li>
+                <li>Interactive HTML-based learning sessions</li>
+                <li>Practice questions and tests</li>
+                <li>Chapter-wise organized content for Classes 11 & 12</li>
+            </ul>
+
+            <h3><span class="num">3</span> AI-Generated Content Disclaimer</h3>
+            <div class="highlight-box">
+                <div class="hb-title">⚠️ Important — Please Read Carefully</div>
+                <p>
+                    All practice questions, tests, and certain study materials on this website are <strong>generated using Artificial Intelligence (AI)</strong>. By using our content, you acknowledge and accept the following:
+                </p>
+                <ul>
+                    <li>AI-generated content may contain <strong>errors, inaccuracies, or outdated information</strong>.</li>
+                    <li>Questions are <strong>not official</strong> NEET, JEE, or CBSE questions and are for <strong>practice purposes only</strong>.</li>
+                    <li>We <strong>do not guarantee</strong> the accuracy, completeness, or reliability of any AI-generated content.</li>
+                    <li>Users must <strong>cross-verify</strong> all answers and concepts from official NCERT textbooks and trusted sources.</li>
+                    <li>We are <strong>not responsible</strong> for any academic, personal, or professional decisions made based on AI-generated content.</li>
+                    <li>Any reliance you place on such content is <strong>strictly at your own risk</strong>.</li>
+                </ul>
+            </div>
+
+            <h3><span class="num">4</span> User Responsibilities</h3>
+            <p>As a user of Aditya's Chronicles, you agree to:</p>
+            <ul>
+                <li>Use the website only for <strong>lawful and educational purposes</strong></li>
+                <li>Not attempt to hack, scrape, or disrupt the website</li>
+                <li>Not bypass anti-download protections on interactive sessions</li>
+                <li>Not redistribute, resell, or claim ownership of our content</li>
+                <li>Not use automated tools (bots, scrapers) to extract content</li>
+                <li>Respect the intellectual property of Aditya's Chronicles</li>
+            </ul>
+
+            <h3><span class="num">5</span> Intellectual Property Rights</h3>
+            <p>
+                All content on this website — including study notes, PDFs, interactive sessions, design, logos, and code — is the property of <strong>Aditya's Chronicles</strong> and is protected by applicable copyright laws.
+            </p>
+            <div class="info-box">
+                <div class="ib-title">📌 You May:</div>
+                <ul>
+                    <li>Access and view all study materials for personal, non-commercial use</li>
+                    <li>Share links to our website with friends and classmates</li>
+                    <li>Use the content for self-study and revision</li>
+                </ul>
+            </div>
+            <div class="warning-box">
+                <div class="wb-title">🚫 You May NOT:</div>
+                <ul>
+                    <li>Copy, reproduce, or redistribute our content without permission</li>
+                    <li>Sell, sublicense, or use our content commercially</li>
+                    <li>Claim our content as your own</li>
+                    <li>Remove or alter copyright notices or watermarks</li>
+                </ul>
+            </div>
+
+            <h3><span class="num">6</span> Anti-Download Policy</h3>
+            <p>
+                Our interactive HTML sessions are protected by <strong>anti-download measures</strong>. Any attempt to:
+            </p>
+            <ul>
+                <li>Download interactive sessions via browser tools</li>
+                <li>Use developer tools to extract content</li>
+                <li>Copy-paste or save interactive content</li>
+            </ul>
+            <p>
+                ...is strictly <strong>prohibited</strong> and may result in restricted access.
+            </p>
+
+            <h3><span class="num">7</span> Third-Party Links</h3>
+            <p>
+                Our website contains links to third-party platforms such as YouTube, Telegram, Instagram, and WhatsApp. We are not responsible for:
+            </p>
+            <ul>
+                <li>The content, privacy practices, or availability of these platforms</li>
+                <li>Any transactions or interactions you have on these platforms</li>
+                <li>Any damages or losses arising from your use of third-party services</li>
+            </ul>
+
+            <h3><span class="num">8</span> No Guarantee of Results</h3>
+            <div class="warning-box">
+                <div class="wb-title">⚠️ Important</div>
+                <p>
+                    Aditya's Chronicles is a <strong>supplementary educational resource</strong>. We do <strong>not guarantee</strong>:
+                </p>
+                <ul>
+                    <li>Any specific exam score, rank, or result</li>
+                    <li>Admission to any institution</li>
+                    <li>Success in NEET, JEE, CBSE, or any other examination</li>
+                </ul>
+                <p>Your exam performance depends on your own effort, consistency, and understanding.</p>
+            </div>
+
+            <h3><span class="num">9</span> Limitation of Liability</h3>
+            <p>
+                To the maximum extent permitted by law, <strong>Aditya's Chronicles</strong> and its creators shall <strong>not be liable</strong> for:
+            </p>
+            <ul>
+                <li>Any direct, indirect, or incidental damages</li>
+                <li>Loss of data, marks, opportunities, or profits</li>
+                <li>Errors or omissions in AI-generated content</li>
+                <li>Service interruptions or technical issues</li>
+                <li>Any reliance placed on our study materials</li>
+            </ul>
+
+            <h3><span class="num">10</span> Service Availability</h3>
+            <p>
+                We strive to keep Aditya's Chronicles available 24/7, but we do not guarantee:
+            </p>
+            <ul>
+                <li>Uninterrupted or error-free service</li>
+                <li>That all features will always work</li>
+                <li>That content will always be available</li>
+            </ul>
+            <p>
+                We reserve the right to <strong>modify, suspend, or discontinue</strong> any part of the service at any time without prior notice.
+            </p>
+
+            <h3><span class="num">11</span> Privacy</h3>
+            <p>
+                Your use of our website is also governed by our <a href="privacy.html">Privacy Policy</a>. Please review it to understand how we handle your data.
+            </p>
+
+            <h3><span class="num">12</span> Changes to Terms</h3>
+            <p>
+                We may update these Terms & Conditions from time to time. Changes will be posted on this page with an updated date. Your continued use of the website after changes means you <strong>accept the updated terms</strong>.
+            </p>
+
+            <h3><span class="num">13</span> Termination</h3>
+            <p>
+                We reserve the right to <strong>restrict or terminate</strong> access to our website for any user who:
+            </p>
+            <ul>
+                <li>Violates these Terms & Conditions</li>
+                <li>Attempts to harm the website or its users</li>
+                <li>Engages in illegal or unethical activities</li>
+            </ul>
+
+            <h3><span class="num">14</span> Governing Law</h3>
+            <p>
+                These Terms & Conditions are governed by the laws of <strong>India</strong>. Any disputes shall be subject to the exclusive jurisdiction of Indian courts.
+            </p>
+
+            <h3><span class="num">15</span> Contact Us</h3>
+            <p>For any questions regarding these Terms & Conditions, reach out to us:</p>
+            <ul>
+                <li>📺 YouTube: <a href="https://youtube.com/@adityas_chronicles?si=daa4kZ_OTSPUNebO" target="_blank">@adityas_chronicles</a></li>
+                <li>✈️ Telegram: <a href="https://t.me/AdityasChronicles" target="_blank">AdityasChronicles</a></li>
+                <li>📸 Instagram: <a href="https://www.instagram.com/ai2aditya" target="_blank">@ai2aditya</a></li>
+                <li>💬 WhatsApp: <a href="https://whatsapp.com/channel/0029Vb9NYS2A2pL68kRued2P" target="_blank">Channel</a></li>
+            </ul>
+
+            <p class="footer-note">
+                By using Aditya's Chronicles, you agree to these Terms & Conditions.
+            </p>
+        </div>
+
+        <!-- Social links -->
+        <div class="social-links">
+            <a href="https://youtube.com/@adityas_chronicles?si=daa4kZ_OTSPUNebO" target="_blank" class="social-btn youtube">▶ YouTube</a>
+            <a href="https://t.me/AdityasChronicles" target="_blank" class="social-btn telegram">✈ Telegram</a>
+            <a href="https://www.instagram.com/ai2aditya?stkn=MW95cmh2dHpqaGd0aw==" target="_blank" class="social-btn instagram">📸 Instagram</a>
+            <a href="https://whatsapp.com/channel/0029Vb9NYS2A2pL68kRued2P" target="_blank" class="social-btn whatsapp">💬 WhatsApp</a>
+        </div>
+
+        <p class="copyright">© 2026 Aditya's Chronicles · All rights reserved.</p>
+    </div>
+</body>
+</html>
