@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy · Aditya's Chronicles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #f4f7fc;
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --card-border: rgba(0, 0, 0, 0.06);
+            --primary: #2563eb;
+            --accent-green: #16a34a;
+            --text: #0b1a2f;
+            --text-secondary: #1e3a5f;
+            --muted: #64748b;
+            --border: rgba(0, 0, 0, 0.07);
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 24px 56px rgba(0, 0, 0, 0.08);
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 20px;
+            --radius-xl: 24px;
+            --transition: 0.25s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            padding: 0 0 40px;
+        }
+
+        /* light orbs */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.20;
+            pointer-events: none;
+            z-index: 0;
+            animation: orbFloat 22s ease-in-out infinite;
+        }
+        .bg-orb.orb-1 { width: 500px; height: 500px; background: #bfdbfe; top: -150px; left: -150px; }
+        .bg-orb.orb-2 { width: 450px; height: 450px; background: #a7f3d0; bottom: -120px; right: -120px; animation-delay: -7s; }
+        .bg-orb.orb-3 { width: 350px; height: 350px; background: #c7d2fe; top: 40%; left: 60%; animation-delay: -14s; }
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(40px, -40px) scale(1.08); }
+            50% { transform: translate(-20px, 30px) scale(0.92); }
+            75% { transform: translate(-50px, -10px) scale(1.04); }
+        }
+        .grid-pattern {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+            background-size: 56px 56px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .app { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+
+        /* ===== HEADER ===== */
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border-radius: 40px;
+            background: white;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            text-decoration: none;
+            box-shadow: var(--shadow-sm);
+            font-family: inherit;
+        }
+        .back-btn:hover {
+            border-color: var(--primary);
+            background: #f8faff;
+            transform: translateX(-4px);
+            box-shadow: var(--shadow-md);
+            color: var(--primary);
+        }
+
+        .title-block {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 18px 0 24px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--border);
+        }
+        .title-block .icon {
+            font-size: 2.4rem;
+            filter: drop-shadow(0 2px 12px rgba(37, 99, 235, 0.15));
+        }
+        .title-block h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            color: var(--text);
+            line-height: 1.2;
+        }
+        .title-block p {
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-style: italic;
+            margin-top: 2px;
+        }
+
+        /* ===== PRIVACY CONTENT ===== */
+        .privacy-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 32px 28px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+        }
+        .privacy-card h3 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-top: 24px;
+            margin-bottom: 10px;
+            letter-spacing: -0.2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .privacy-card h3:first-child { margin-top: 0; }
+        .privacy-card h3 .num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 8px;
+            background: #dbeafe;
+            color: #1d4ed8;
+            font-size: 0.75rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        .privacy-card p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            margin-bottom: 12px;
+        }
+        .privacy-card ul {
+            padding-left: 20px;
+            margin-bottom: 14px;
+        }
+        .privacy-card ul li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            margin-bottom: 6px;
+        }
+        .privacy-card a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .privacy-card a:hover { text-decoration: underline; }
+
+        /* Highlight box - AI disclaimer */
+        .highlight-box {
+            background: linear-gradient(145deg, #fef9c3, #fef3c7);
+            border-left: 4px solid #d97706;
+            border-radius: var(--radius-sm);
+            padding: 18px 20px;
+            margin: 14px 0;
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.08);
+        }
+        .highlight-box .hb-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #78350f;
+            margin-bottom: 10px;
+        }
+        .highlight-box p {
+            color: #78350f;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .highlight-box ul li {
+            color: #78350f;
+            font-weight: 500;
+        }
+        .highlight-box ul li strong { color: #7c2d12; }
+
+        .last-updated {
+            display: inline-block;
+            font-size: 0.72rem;
+            color: var(--muted);
+            background: #f1f5f9;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        .footer-note {
+            margin-top: 28px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* Footer social */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 32px;
+        }
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.6);
+            color: var(--text);
+            box-shadow: var(--shadow-sm);
+        }
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            color: white;
+        }
+        .social-btn.youtube:hover { background: #ff0000; border-color: #ff0000; }
+        .social-btn.telegram:hover { background: #0088cc; border-color: #0088cc; }
+        .social-btn.instagram:hover { background: #e4405f; border-color: #e4405f; }
+        .social-btn.whatsapp:hover { background: #25d366; border-color: #25d366; }
+
+        .copyright {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        /* Mobile */
+        @media (max-width: 480px) {
+            .app { padding: 16px 14px; }
+            .title-block h1 { font-size: 1.4rem; }
+            .title-block .icon { font-size: 1.9rem; }
+            .privacy-card { padding: 22px 18px; border-radius: var(--radius-md); }
+            .privacy-card h3 { font-size: 0.95rem; }
+            .privacy-card p, .privacy-card ul li { font-size: 0.82rem; }
+            .highlight-box { padding: 14px 16px; }
+            .highlight-box .hb-title { font-size: 0.88rem; }
+            .social-btn { padding: 6px 14px; font-size: 0.72rem; }
+            .back-btn { font-size: 0.78rem; padding: 6px 16px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background effects -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+    <div class="grid-pattern"></div>
+
+    <div class="app">
+        <!-- Back button -->
+        <a href="index.html" class="back-btn">← Back to Home</a>
+
+        <!-- Title -->
+        <div class="title-block">
+            <span class="icon">🔒</span>
+            <div>
+                <h1>Privacy Policy</h1>
+                <p>Aditya's Chronicles — Your privacy matters</p>
+            </div>
+        </div>
+
+        <!-- Privacy content -->
+        <div class="privacy-card">
+            <span class="last-updated">📅 Last updated: september 2026</span>
+
+            <h3><span class="num">1</span> Introduction</h3>
+            <p>
+                Welcome to <strong>Aditya's Chronicles</strong>. We respect your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website.
+            </p>
+
+            <h3><span class="num">2</span> Information We Collect</h3>
+            <p>We do not require any registration, login, or personal information to access our study materials. However, we may collect:</p>
+            <ul>
+                <li><strong>Non-personal data:</strong> Browser type, device type, pages visited, and time spent — collected anonymously for analytics.</li>
+                <li><strong>Cookies:</strong> Small data files used to improve your browsing experience. You can disable cookies in your browser settings.</li>
+                <li><strong>Third-party services:</strong> We use Firebase (Google) to store and serve study materials. Their privacy policy applies to data stored on their servers.</li>
+            </ul>
+
+            <h3><span class="num">3</span> How We Use Your Information</h3>
+            <ul>
+                <li>To provide and maintain our free educational content</li>
+                <li>To improve user experience and website performance</li>
+                <li>To respond to your queries via social media channels</li>
+            </ul>
+
+            <h3><span class="num">4</span> AI-Generated Questions Disclaimer</h3>
+            <div class="highlight-box">
+                <div class="hb-title">⚠️ Important Notice</div>
+                <p>
+                    The practice questions, tests, and study materials available on this website are <strong>generated using Artificial Intelligence (AI)</strong> and are intended for <strong>educational and practice purposes only</strong>.
+                </p>
+                <ul>
+                    <li>AI-generated questions may contain <strong>errors, inaccuracies, or outdated information</strong>.</li>
+                    <li>These questions are <strong>not official</strong> NEET, JEE, or CBSE questions.</li>
+                    <li>Always verify important concepts from <strong>official NCERT textbooks</strong> and trusted sources.</li>
+                    <li>We are <strong>not responsible</strong> for any decisions made based on AI-generated content.</li>
+                    <li>Users are encouraged to cross-check answers with teachers or official study material.</li>
+                </ul>
+            </div>
+
+            <h3><span class="num">5</span> Content Ownership</h3>
+            <p>All study materials, notes, PDFs, and interactive sessions are provided for <strong>free educational use</strong>. You may not:</p>
+            <ul>
+                <li>Resell, redistribute, or claim ownership of our content</li>
+                <li>Use our materials for commercial purposes without permission</li>
+                <li>Download or copy interactive HTML sessions (protected by anti-download measures)</li>
+            </ul>
+
+            <h3><span class="num">6</span> Third-Party Links</h3>
+            <p>
+                Our website contains links to YouTube, Telegram, Instagram, and WhatsApp. We are not responsible for the privacy practices of these platforms. Please review their respective privacy policies.
+            </p>
+
+            <h3><span class="num">7</span> Children's Privacy</h3>
+            <p>
+                Our content is designed for students preparing for NEET, JEE, and CBSE exams (typically ages 15+). We do not knowingly collect personal information from children under 13.
+            </p>
+
+            <h3><span class="num">8</span> Data Security</h3>
+            <p>
+                We use Firebase (Google Cloud) to store study materials securely. While we take reasonable measures to protect data, no method of transmission over the internet is 100% secure.
+            </p>
+
+            <h3><span class="num">9</span> Your Rights</h3>
+            <ul>
+                <li>You can browse our website anonymously</li>
+                <li>You can disable cookies anytime</li>
+                <li>You can contact us via social media for any privacy concerns</li>
+            </ul>
+
+            <h3><span class="num">10</span> Changes to This Policy</h3>
+            <p>
+                We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated date.
+            </p>
+
+            <h3><span class="num">11</span> Contact Us</h3>
+            <p>For any questions regarding this Privacy Policy, reach out to us:</p>
+            <ul>
+                <li>📺 YouTube: <a href="https://youtube.com/@adityas_chronicles?si=daa4kZ_OTSPUNebO" target="_blank">@adityas_chronicles</a></li>
+                <li>✈️ Telegram: <a href="https://t.me/AdityasChronicles" target="_blank">AdityasChronicles</a></li>
+                <li>📸 Instagram: <a href="https://www.instagram.com/ai2aditya" target="_blank">@ai2aditya</a></li>
+                <li>💬 WhatsApp: <a href="https://whatsapp.com/channel/0029Vb9NYS2A2pL68kRued2P" target="_blank">Channel</a></li>
+            </ul>
+
+            <p class="footer-note">
+                By using Aditya's Chronicles, you agree to this Privacy Policy.
+            </p>
+        </div>
+
+        <!-- Social links -->
+        <div class="social-links">
+            <a href="https://youtube.com/@adityas_chronicles?si=daa4kZ_OTSPUNebO" target="_blank" class="social-btn youtube">▶ YouTube</a>
+            <a href="https://t.me/AdityasChronicles" target="_blank" class="social-btn telegram">✈ Telegram</a>
+            <a href="https://www.instagram.com/ai2aditya?stkn=MW95cmh2dHpqaGd0aw==" target="_blank" class="social-btn instagram">📸 Instagram</a>
+            <a href="https://whatsapp.com/channel/0029Vb9NYS2A2pL68kRued2P" target="_blank" class="social-btn whatsapp">💬 WhatsApp</a>
+        </div>
+
+        <p class="copyright">© 2026 Aditya's Chronicles · All rights reserved.</p>
+    </div>
+</body>
+</html>
