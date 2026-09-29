@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact · Aditya's Chronicles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #f4f7fc;
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --card-border: rgba(0, 0, 0, 0.06);
+            --primary: #2563eb;
+            --accent-green: #16a34a;
+            --text: #0b1a2f;
+            --text-secondary: #1e3a5f;
+            --muted: #64748b;
+            --border: rgba(0, 0, 0, 0.07);
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 24px 56px rgba(0, 0, 0, 0.08);
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 20px;
+            --radius-xl: 24px;
+            --transition: 0.25s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            padding: 0 0 40px;
+        }
+
+        /* light orbs */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.20;
+            pointer-events: none;
+            z-index: 0;
+            animation: orbFloat 22s ease-in-out infinite;
+        }
+        .bg-orb.orb-1 { width: 500px; height: 500px; background: #bfdbfe; top: -150px; left: -150px; }
+        .bg-orb.orb-2 { width: 450px; height: 450px; background: #a7f3d0; bottom: -120px; right: -120px; animation-delay: -7s; }
+        .bg-orb.orb-3 { width: 350px; height: 350px; background: #c7d2fe; top: 40%; left: 60%; animation-delay: -14s; }
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(40px, -40px) scale(1.08); }
+            50% { transform: translate(-20px, 30px) scale(0.92); }
+            75% { transform: translate(-50px, -10px) scale(1.04); }
+        }
+        .grid-pattern {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+            background-size: 56px 56px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .app { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+
+        /* ===== HEADER ===== */
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border-radius: 40px;
+            background: white;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            text-decoration: none;
+            box-shadow: var(--shadow-sm);
+            font-family: inherit;
+        }
+        .back-btn:hover {
+            border-color: var(--primary);
+            background: #f8faff;
+            transform: translateX(-4px);
+            box-shadow: var(--shadow-md);
+            color: var(--primary);
+        }
+
+        .title-block {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 18px 0 24px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--border);
+        }
+        .title-block .icon {
+            font-size: 2.4rem;
+            filter: drop-shadow(0 2px 12px rgba(37, 99, 235, 0.15));
+        }
+        .title-block h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            color: var(--text);
+            line-height: 1.2;
+        }
+        .title-block p {
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-style: italic;
+            margin-top: 2px;
+        }
+
+        /* ===== HERO CARD ===== */
+        .hero-card {
+            background: linear-gradient(145deg, #ffffff, #f8faff);
+            border-radius: var(--radius-lg);
+            padding: 32px 28px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            text-align: center;
+            margin-bottom: 22px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-card .hero-emoji {
+            font-size: 3.5rem;
+            display: block;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+            animation: wave 2.5s ease-in-out infinite;
+            transform-origin: 70% 70%;
+        }
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            10% { transform: rotate(14deg); }
+            20% { transform: rotate(-8deg); }
+            30% { transform: rotate(14deg); }
+            40% { transform: rotate(-4deg); }
+            50% { transform: rotate(10deg); }
+            60% { transform: rotate(0deg); }
+        }
+        .hero-card h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            background: linear-gradient(145deg, #1e4ed8, #0d9488, #16a34a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-card .hero-tagline {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-card .hero-divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #2563eb, #0891b2, #16a34a);
+            margin: 14px auto;
+            border-radius: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-card .hero-desc {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== CONTACT GRID ===== */
+        .contact-section {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 32px 28px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            margin-bottom: 22px;
+        }
+        .contact-section h3 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 16px;
+            letter-spacing: -0.2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+        @media (max-width: 550px) {
+            .contact-grid { grid-template-columns: 1fr; }
+        }
+
+        .contact-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 20px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+        .contact-card::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            transition: var(--transition);
+        }
+        .contact-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+        .contact-card .cc-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+        .contact-card:hover .cc-icon {
+            transform: scale(1.08) rotate(-5deg);
+        }
+        .contact-card .cc-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .contact-card .cc-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: -0.1px;
+            margin-bottom: 2px;
+        }
+        .contact-card .cc-desc {
+            font-size: 0.75rem;
+            color: var(--muted);
+            line-height: 1.4;
+        }
+        .contact-card .cc-arrow {
+            color: var(--muted);
+            font-size: 1rem;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+        .contact-card:hover .cc-arrow {
+            transform: translateX(4px);
+        }
+
+        /* YouTube Card */
+        .contact-card.youtube-card .cc-icon {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .contact-card.youtube-card::after {
+            background: linear-gradient(180deg, #ff0000, #cc0000);
+        }
+        .contact-card.youtube-card:hover {
+            border-color: #ff0000;
+            background: #fff5f5;
+        }
+        .contact-card.youtube-card:hover .cc-arrow {
+            color: #ff0000;
+        }
+
+        /* Telegram Card */
+        .contact-card.telegram-card .cc-icon {
+            background: #e0f2fe;
+            color: #0284c7;
+        }
+        .contact-card.telegram-card::after {
+            background: linear-gradient(180deg, #0088cc, #006699);
+        }
+        .contact-card.telegram-card:hover {
+            border-color: #0088cc;
+            background: #f0f9ff;
+        }
+        .contact-card.telegram-card:hover .cc-arrow {
+            color: #0088cc;
+        }
+
+        /* Instagram Card */
+        .contact-card.instagram-card .cc-icon {
+            background: #fce7f3;
+            color: #db2777;
+        }
+        .contact-card.instagram-card::after {
+            background: linear-gradient(180deg, #e4405f, #c13584);
+        }
+        .contact-card.instagram-card:hover {
+            border-color: #e4405f;
+            background: #fdf2f8;
+        }
+        .contact-card.instagram-card:hover .cc-arrow {
+            color: #e4405f;
+        }
+
+        /* WhatsApp Card */
+        .contact-card.whatsapp-card .cc-icon {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+        .contact-card.whatsapp-card::after {
+            background: linear-gradient(180deg, #25d366, #128c7e);
+        }
+        .contact-card.whatsapp-card:hover {
+            border-color: #25d366;
+            background: #f0fdf4;
+        }
+        .contact-card.whatsapp-card:hover .cc-arrow {
+            color: #25d366;
+        }
+
+        /* ===== INFO BOX ===== */
+        .info-box {
+            background: linear-gradient(145deg, #dbeafe, #bfdbfe);
+            border-left: 4px solid #2563eb;
+            border-radius: var(--radius-sm);
+            padding: 18px 20px;
+            margin: 14px 0;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+        }
+        .info-box .ib-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #1e3a8a;
+            margin-bottom: 10px;
+        }
+        .info-box p {
+            color: #1e3a8a;
+            font-weight: 500;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .info-box ul {
+            padding-left: 20px;
+            margin-top: 6px;
+        }
+        .info-box ul li {
+            color: #1e3a8a;
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+            line-height: 1.5;
+        }
+
+        /* Quote box */
+        .quote-box {
+            background: linear-gradient(145deg, #f0fdf4, #dcfce7);
+            border-left: 4px solid #16a34a;
+            border-radius: var(--radius-sm);
+            padding: 20px 22px;
+            margin: 16px 0;
+            box-shadow: 0 4px 12px rgba(22, 163, 74, 0.08);
+            text-align: center;
+        }
+        .quote-box .q-text {
+            font-size: 0.95rem;
+            font-style: italic;
+            color: #14532d;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+        .quote-box .q-author {
+            font-size: 0.78rem;
+            color: #15803d;
+            margin-top: 8px;
+            font-weight: 700;
+        }
+
+        /* FAQ section */
+        .faq-item {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+        .faq-item:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+        .faq-item .faq-q {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .faq-item .faq-q::before {
+            content: '❓';
+            font-size: 0.9rem;
+        }
+        .faq-item .faq-a {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            padding-left: 24px;
+        }
+
+        .footer-note {
+            margin-top: 28px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* Footer social */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 32px;
+        }
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.6);
+            color: var(--text);
+            box-shadow: var(--shadow-sm);
+        }
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            color: white;
+        }
+        .social-btn.youtube:hover { background: #ff0000; border-color: #ff0000; }
+        .social-btn.telegram:hover { background: #0088cc; border-color: #0088cc; }
+        .social-btn.instagram:hover { background: #e4405f; border-color: #e4405f; }
+        .social-btn.whatsapp:hover { background: #25d366; border-color: #25d366; }
+
+        .copyright {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        /* Mobile */
+        @media (max-width: 480px) {
+            .app { padding: 16px 14px; }
+            .title-block h1 { font-size: 1.4rem; }
+            .title-block .icon { font-size: 1.9rem; }
+            .hero-card { padding: 24px 20px; border-radius: var(--radius-md); }
+            .hero-card .hero-emoji { font-size: 2.8rem; }
+            .hero-card h2 { font-size: 1.25rem; }
+            .hero-card .hero-desc { font-size: 0.82rem; }
+            .contact-section { padding: 22px 18px; border-radius: var(--radius-md); }
+            .contact-section h3 { font-size: 0.95rem; }
+            .contact-card { padding: 14px 16px; gap: 12px; }
+            .contact-card .cc-icon { width: 42px; height: 42px; font-size: 1.3rem; }
+            .contact-card .cc-title { font-size: 0.88rem; }
+            .contact-card .cc-desc { font-size: 0.7rem; }
+            .info-box { padding: 14px 16px; }
+            .info-box .ib-title { font-size: 0.88rem; }
+            .quote-box { padding: 16px 18px; }
+            .faq-item { padding: 14px 16px; }
+            .faq-item .faq-q { font-size: 0.82rem; }
+            .faq-item .faq-a { font-size: 0.78rem; padding-left: 22px; }
+            .social-btn { padding: 6px 14px; font-size: 0.72rem; }
+            .back-btn { font-size: 0.78rem; padding: 6px 16px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background effects -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+    <div class="grid-pattern"></div>
+
+    <div class="app">
+        <!-- Back button -->
+        <a href="index.html" class="back-btn">← Back to Home</a>
+
+        <!-- Title -->
+        <div class="title-block">
+            <span class="icon">📬</span>
+            <div>
+                <h1>Contact Us</h1>
+                <p>Aditya's Chronicles — Get in touch</p>
+            </div>
+        </div>
+
+        <!-- Hero card -->
+        <div class="hero-card">
+            <span class="hero-emoji">👋</span>
+            <h2>We'd Love To Hear From You!</h2>
+            <p class="hero-tagline">Questions? Suggestions? Feedback?</p>
+            <div class="hero-divider"></div>
+            <p class="hero-desc">
+                Whether you have a question about study materials, want to suggest improvements, or just want to say hi — we're always happy to connect with fellow students and learners. Reach out through any of the platforms below!
+            </p>
+        </div>
+
+        <!-- Contact cards -->
+        <div class="contact-section">
+            <h3>🌐 Connect With Us</h3>
+            <div class="contact-grid">
+                <a href="https://youtube.com/@adityas_chronicles?si=daa4kZ_OTSPUNebO" target="_blank" class="contact-card youtube-card">
+                    <div class="cc-icon">▶</div>
+                    <div class="cc-info">
+                        <div class="cc-title">YouTube</div>
+                        <div class="cc-desc">Watch free video sessions</div>
+                    </div>
+                    <span class="cc-arrow">→</span>
+                </a>
+
+                <a href="https://t.me/AdityasChronicles" target="_blank" class="contact-card telegram-card">
+                    <div class="cc-icon">✈</div>
+                    <div class="cc-info">
+                        <div class="cc-title">Telegram</div>
+                        <div class="cc-desc">Join our study channel</div>
+                    </div>
+                    <span class="cc-arrow">→</span>
+                </a>
+
+                <a href="https://www.instagram.com/ai2aditya?stkn=MW95cmh2dHpqaGd0aw==" target="_blank" class="contact-card instagram-card">
+                    <div class="cc-icon">📸</div>
+                    <div class="cc-info">
+                        <div class="cc-title">Instagram</div>
+                        <div class="cc-desc">Follow for daily updates</div>
+                    </div>
+                    <span class="cc-arrow">→</span>
+                </a>
+
+                <a href="https://whatsapp.com/channel/0029Vb9NYS2A2pL68kRued2P" target="_blank" class="contact-card whatsapp-card">
+                    <div class="cc-icon">💬</div>
+                    <div class="cc-info">
+                        <div class="cc-title">WhatsApp</div>
+                        <div class="cc-desc">Get instant notifications</div>
+                    </div>
+                    <span class="cc-arrow">→</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Response time info -->
+        <div class="contact-section">
+            <h3>⏱️ Response Time</h3>
+            <div class="info-box">
+                <div class="ib-title">📩 We Usually Reply Within:</div>
+                <ul>
+                    <li><strong>YouTube comments:</strong> 24–48 hours</li>
+                    <li><strong>Telegram messages:</strong> 12–24 hours</li>
+                    <li><strong>Instagram DMs:</strong> 24–48 hours</li>
+                    <li><strong>WhatsApp channel:</strong> Broadcasts only (no DMs)</li>
+                </ul>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; margin-top: 12px;">
+                Please note: Since this is a <strong>free educational platform</strong> run by a student, response times may vary during exam periods. We appreciate your patience! 🙏
+            </p>
+        </div>
+
+        <!-- FAQ section -->
+        <div class="contact-section">
+            <h3>❓ Frequently Asked Questions</h3>
+
+            <div class="faq-item">
+                <div class="faq-q">Is Aditya's Chronicles really 100% free?</div>
+                <div class="faq-a">Yes! All study materials, PDF notes, interactive sessions, and practice questions are completely free — forever. No hidden charges, no subscriptions.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">Are the questions on this platform official NEET/JEE questions?</div>
+                <div class="faq-a">No. Most questions are generated using Artificial Intelligence (AI) for practice purposes only. They are not official exam questions. Always cross-verify with NCERT textbooks.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">Can I download the interactive HTML sessions?</div>
+                <div class="faq-a">No. Interactive sessions are protected by anti-download measures and can only be viewed/run on the website. PDF notes, however, can be viewed freely.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">How can I suggest a new chapter or topic?</div>
+                <div class="faq-a">Reach out to us on Telegram or Instagram with your suggestion. We love hearing what students want to learn!</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">I found an error in a question. What should I do?</div>
+                <div class="faq-a">Please report it on Telegram or Instagram with a screenshot. Since questions are AI-generated, your feedback helps us improve the content quality.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">Can I contribute study materials to the platform?</div>
+                <div class="faq-a">Yes! If you have quality study notes or materials you'd like to share, contact us on Telegram. We'll review and credit you if published.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">Do you offer personal mentorship or doubt-solving?</div>
+                <div class="faq-a">Currently, we don't offer 1-on-1 mentorship. But you can ask doubts in our Telegram channel, and the community will help!</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">Is my data safe on this website?</div>
+                <div class="faq-a">Yes. We don't collect personal information. Please read our <a href="privacy.html" style="color: var(--primary); font-weight: 600; text-decoration: none;">Privacy Policy</a> for full details.</div>
+            </div>
+        </div>
+
+        <!-- Message from founder -->
+        <div class="contact-section">
+            <h3>💌 A Personal Note</h3>
+            <div class="quote-box">
+                <div class="q-text">
+                    "Thank you for being here. Whether you're preparing for NEET, JEE, or boards — remember, every small step counts. If this platform helps even one student achieve their dream, my effort is worth it. Feel free to reach out anytime — I read every message personally. ❤️"
+                </div>
+                <div class="q-author">— Aditya, Founder</div>
+            </div>
+        </div>
+
+        <!-- Important links -->
+        <div class="contact-section">
+            <h3>🔗 Important Links</h3>
+            <div class="contact-grid">
+                <a href="about.html" class="contact-card" style="border-color: rgba(37, 99, 235, 0.15);">
+                    <div class="cc-icon" style="background: #dbeafe; color: #1d4ed8;">👋</div>
+                    <div class="cc-info">
+                        <div class="cc-title">About Us</div>
+                        <div class="cc-desc">Know our story & mission</div>
+                    </div>
+                    <span class="cc-arrow">→</span>
+                </a>
+
+                <a href="privacy.html" class="contact-card" style="border-color: rgba(37, 99, 235, 0.15);">
+                    <div class="cc-icon" style="background: #dbeafe; color: #1d4ed8;">🔒</div>
+                    <div class="cc-info">
+                        <div class="cc-title">Privacy Policy</div>
+                        <div class="cc-desc">How we handle your data</div>
+                    </div>
+                    <span class="cc-arrow">→</span>
+                </a>
+
+                <a href="terms.html" class="contact-card" style="border-color: rgba(37, 99, 235, 0.15);">
+                    <div class="cc-icon" style="background: #dbeafe; color: #1d4ed8;">📋</div>
+                    <div class="cc-info">
+                        <div class="cc-title">Terms & Conditions</div>
+                        <div class="cc-desc">Rules of using our platform</div>
+                    </div>
+                    <span class="cc-arrow">→</span>
+                </a>
+
+                <a href="index.html" class="contact-card" style="border-color: rgba(37, 99, 235, 0.15);">
+                    <div class="cc-icon" style="background: #dbeafe; color: #1d4ed8;">🏠</div>
+                    <div class="cc-info">
+                        <div class="cc-title">Home</div>
+                        <div class="cc-desc">Browse study materials</div>
+                    </div>
+                    <span class="cc-arrow">→</span>
+                </a>
+            </div>
+        </div>
+
+        <p class="footer-note">
+            We're always here to help. Don't hesitate to reach out — your success is our mission. 🚀
+        </p>
+    </div>
+
+    <!-- Social links -->
+    <div class="social-links">
+        <a href="https://youtube.com/@adityas_chronicles?si=daa4kZ_OTSPUNebO" target="_blank" class="social-btn youtube">▶ YouTube</a>
+        <a href="https://t.me/AdityasChronicles" target="_blank" class="social-btn telegram">✈ Telegram</a>
+        <a href="https://www.instagram.com/ai2aditya?stkn=MW95cmh2dHpqaGd0aw==" target="_blank" class="social-btn instagram">📸 Instagram</a>
+        <a href="https://whatsapp.com/channel/0029Vb9NYS2A2pL68kRued2P" target="_blank" class="social-btn whatsapp">💬 WhatsApp</a>
+    </div>
+
+    <p class="copyright">© 2026 Aditya's Chronicles · All rights reserved.</p>
+
+</body>
+</html>
