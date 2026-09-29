@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About · Aditya's Chronicles</title>
+    <title>Contact · Aditya's Chronicles</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -152,16 +152,23 @@
             background: radial-gradient(circle, rgba(37, 99, 235, 0.06) 0%, transparent 70%);
             pointer-events: none;
         }
-        .hero-card .hero-icon {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid white;
-            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.25);
-            margin-bottom: 14px;
+        .hero-card .hero-emoji {
+            font-size: 3.5rem;
+            display: block;
+            margin-bottom: 12px;
             position: relative;
             z-index: 1;
+            animation: wave 2.5s ease-in-out infinite;
+            transform-origin: 70% 70%;
+        }
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            10% { transform: rotate(14deg); }
+            20% { transform: rotate(-8deg); }
+            30% { transform: rotate(14deg); }
+            40% { transform: rotate(-4deg); }
+            50% { transform: rotate(10deg); }
+            60% { transform: rotate(0deg); }
         }
         .hero-card h2 {
             font-size: 1.5rem;
@@ -201,144 +208,166 @@
             z-index: 1;
         }
 
-        /* ===== CONTENT CARD ===== */
-        .content-card {
+        /* ===== CONTACT GRID ===== */
+        .contact-section {
             background: white;
             border-radius: var(--radius-lg);
             padding: 32px 28px;
             box-shadow: var(--shadow-sm);
             border: 1px solid var(--border);
+            margin-bottom: 22px;
         }
-        .content-card h3 {
+        .contact-section h3 {
             font-size: 1.05rem;
             font-weight: 800;
             color: var(--text);
-            margin-top: 24px;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
             letter-spacing: -0.2px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        .content-card h3:first-child { margin-top: 0; }
-        .content-card h3 .num {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 26px;
-            height: 26px;
-            border-radius: 8px;
-            background: #dbeafe;
-            color: #1d4ed8;
-            font-size: 0.75rem;
-            font-weight: 800;
-            flex-shrink: 0;
-        }
-        .content-card p {
-            font-size: 0.88rem;
-            color: var(--text-secondary);
-            line-height: 1.75;
-            margin-bottom: 12px;
-        }
-        .content-card ul {
-            padding-left: 20px;
-            margin-bottom: 14px;
-        }
-        .content-card ul li {
-            font-size: 0.88rem;
-            color: var(--text-secondary);
-            line-height: 1.65;
-            margin-bottom: 6px;
-        }
-        .content-card a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .content-card a:hover { text-decoration: underline; }
-
-        /* Feature grid */
-        .feature-grid {
+        .contact-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin: 16px 0;
+            gap: 14px;
         }
-        @media (max-width: 500px) {
-            .feature-grid { grid-template-columns: 1fr; }
-        }
-        .feature-item {
-            background: linear-gradient(145deg, #f8faff, #eff6ff);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 16px 18px;
-            transition: var(--transition);
-        }
-        .feature-item:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
-            border-color: var(--primary);
-        }
-        .feature-item .fi-icon {
-            font-size: 1.5rem;
-            display: block;
-            margin-bottom: 6px;
-        }
-        .feature-item .fi-title {
-            font-size: 0.9rem;
-            font-weight: 800;
-            color: var(--text);
-            margin-bottom: 3px;
-        }
-        .feature-item .fi-desc {
-            font-size: 0.78rem;
-            color: var(--muted);
-            line-height: 1.5;
+        @media (max-width: 550px) {
+            .contact-grid { grid-template-columns: 1fr; }
         }
 
-        /* Stats grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin: 16px 0;
-        }
-        @media (max-width: 600px) {
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        .stat-box {
+        .contact-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 20px;
             background: white;
             border: 1px solid var(--border);
             border-radius: var(--radius-md);
-            padding: 18px 10px;
-            text-align: center;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.2);
             box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+        .contact-card::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
             transition: var(--transition);
         }
-        .stat-box:hover {
-            transform: translateY(-3px);
+        .contact-card:hover {
+            transform: translateY(-4px);
             box-shadow: var(--shadow-md);
-            border-color: var(--primary);
         }
-        .stat-box .sb-num {
+        .contact-card .cc-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1.5rem;
-            font-weight: 800;
-            background: linear-gradient(145deg, #2563eb, #0d9488);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1;
+            flex-shrink: 0;
+            transition: var(--transition);
         }
-        .stat-box .sb-label {
-            font-size: 0.65rem;
+        .contact-card:hover .cc-icon {
+            transform: scale(1.08) rotate(-5deg);
+        }
+        .contact-card .cc-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .contact-card .cc-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: -0.1px;
+            margin-bottom: 2px;
+        }
+        .contact-card .cc-desc {
+            font-size: 0.75rem;
             color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            font-weight: 700;
-            margin-top: 6px;
+            line-height: 1.4;
+        }
+        .contact-card .cc-arrow {
+            color: var(--muted);
+            font-size: 1rem;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+        .contact-card:hover .cc-arrow {
+            transform: translateX(4px);
         }
 
-        /* Info box - blue */
+        /* YouTube Card */
+        .contact-card.youtube-card .cc-icon {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .contact-card.youtube-card::after {
+            background: linear-gradient(180deg, #ff0000, #cc0000);
+        }
+        .contact-card.youtube-card:hover {
+            border-color: #ff0000;
+            background: #fff5f5;
+        }
+        .contact-card.youtube-card:hover .cc-arrow {
+            color: #ff0000;
+        }
+
+        /* Telegram Card */
+        .contact-card.telegram-card .cc-icon {
+            background: #e0f2fe;
+            color: #0284c7;
+        }
+        .contact-card.telegram-card::after {
+            background: linear-gradient(180deg, #0088cc, #006699);
+        }
+        .contact-card.telegram-card:hover {
+            border-color: #0088cc;
+            background: #f0f9ff;
+        }
+        .contact-card.telegram-card:hover .cc-arrow {
+            color: #0088cc;
+        }
+
+        /* Instagram Card */
+        .contact-card.instagram-card .cc-icon {
+            background: #fce7f3;
+            color: #db2777;
+        }
+        .contact-card.instagram-card::after {
+            background: linear-gradient(180deg, #e4405f, #c13584);
+        }
+        .contact-card.instagram-card:hover {
+            border-color: #e4405f;
+            background: #fdf2f8;
+        }
+        .contact-card.instagram-card:hover .cc-arrow {
+            color: #e4405f;
+        }
+
+        /* WhatsApp Card */
+        .contact-card.whatsapp-card .cc-icon {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+        .contact-card.whatsapp-card::after {
+            background: linear-gradient(180deg, #25d366, #128c7e);
+        }
+        .contact-card.whatsapp-card:hover {
+            border-color: #25d366;
+            background: #f0fdf4;
+        }
+        .contact-card.whatsapp-card:hover .cc-arrow {
+            color: #25d366;
+        }
+
+        /* ===== INFO BOX ===== */
         .info-box {
             background: linear-gradient(145deg, #dbeafe, #bfdbfe);
             border-left: 4px solid #2563eb;
@@ -359,9 +388,21 @@
         .info-box p {
             color: #1e3a8a;
             font-weight: 500;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+            line-height: 1.6;
         }
-        .info-box ul li { color: #1e3a8a; font-weight: 500; }
+        .info-box ul {
+            padding-left: 20px;
+            margin-top: 6px;
+        }
+        .info-box ul li {
+            color: #1e3a8a;
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+            line-height: 1.5;
+        }
 
         /* Quote box */
         .quote-box {
@@ -387,53 +428,37 @@
             font-weight: 700;
         }
 
-        /* Contact box */
-        .contact-box {
-            background: linear-gradient(145deg, #f8faff, #eff6ff);
-            border-radius: var(--radius-md);
-            padding: 20px 22px;
+        /* FAQ section */
+        .faq-item {
+            background: white;
             border: 1px solid var(--border);
-            margin-top: 16px;
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            margin-bottom: 10px;
+            transition: var(--transition);
         }
-        .contact-box .cb-title {
-            font-size: 0.95rem;
+        .faq-item:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+        .faq-item .faq-q {
+            font-size: 0.88rem;
             font-weight: 800;
             color: var(--text);
-            margin-bottom: 12px;
+            margin-bottom: 6px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+        .faq-item .faq-q::before {
+            content: '❓';
+            font-size: 0.9rem;
         }
-        @media (max-width: 500px) {
-            .contact-grid { grid-template-columns: 1fr; }
-        }
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 14px;
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            text-decoration: none;
-            color: var(--text);
-            font-weight: 600;
+        .faq-item .faq-a {
             font-size: 0.82rem;
-            transition: var(--transition);
-        }
-        .contact-item:hover {
-            transform: translateX(4px);
-            border-color: var(--primary);
-            box-shadow: var(--shadow-sm);
-        }
-        .contact-item .ci-icon {
-            font-size: 1.1rem;
-            flex-shrink: 0;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            padding-left: 24px;
         }
 
         .footer-note {
@@ -492,19 +517,23 @@
             .title-block h1 { font-size: 1.4rem; }
             .title-block .icon { font-size: 1.9rem; }
             .hero-card { padding: 24px 20px; border-radius: var(--radius-md); }
-            .hero-card .hero-icon { width: 74px; height: 74px; }
+            .hero-card .hero-emoji { font-size: 2.8rem; }
             .hero-card h2 { font-size: 1.25rem; }
             .hero-card .hero-desc { font-size: 0.82rem; }
-            .content-card { padding: 22px 18px; border-radius: var(--radius-md); }
-            .content-card h3 { font-size: 0.95rem; }
-            .content-card p, .content-card ul li { font-size: 0.82rem; }
-            .info-box, .quote-box, .contact-box { padding: 14px 16px; }
-            .feature-item { padding: 14px 16px; }
-            .stat-box { padding: 14px 8px; }
-            .stat-box .sb-num { font-size: 1.25rem; }
+            .contact-section { padding: 22px 18px; border-radius: var(--radius-md); }
+            .contact-section h3 { font-size: 0.95rem; }
+            .contact-card { padding: 14px 16px; gap: 12px; }
+            .contact-card .cc-icon { width: 42px; height: 42px; font-size: 1.3rem; }
+            .contact-card .cc-title { font-size: 0.88rem; }
+            .contact-card .cc-desc { font-size: 0.7rem; }
+            .info-box { padding: 14px 16px; }
+            .info-box .ib-title { font-size: 0.88rem; }
+            .quote-box { padding: 16px 18px; }
+            .faq-item { padding: 14px 16px; }
+            .faq-item .faq-q { font-size: 0.82rem; }
+            .faq-item .faq-a { font-size: 0.78rem; padding-left: 22px; }
             .social-btn { padding: 6px 14px; font-size: 0.72rem; }
             .back-btn { font-size: 0.78rem; padding: 6px 16px; }
-            .contact-item { font-size: 0.78rem; padding: 8px 12px; }
         }
     </style>
 </head>
@@ -521,173 +550,195 @@
 
         <!-- Title -->
         <div class="title-block">
-            <span class="icon">👋</span>
+            <span class="icon">📬</span>
             <div>
-                <h1>About Us</h1>
-                <p>Aditya's Chronicles — Our story</p>
+                <h1>Contact Us</h1>
+                <p>Aditya's Chronicles — Get in touch</p>
             </div>
         </div>
 
         <!-- Hero card -->
         <div class="hero-card">
-            <img 
-                src="https://yt3.googleusercontent.com/FzSAOpFaOKkqMw8Y2JG-7HwXqj743Zdszi4XVmwIwnKtbmMAGTUrb_0Pn-J7-idUWDxYAtY0Q6o=s160-c-k-c0x00ffffff-no-rj" 
-                alt="Aditya's Chronicles" 
-                class="hero-icon"
-                onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%A9%BA%3C/text%3E%3C/svg%3E';"
-            />
-            <h2>Aditya's Chronicles</h2>
-            <p class="hero-tagline">Clear concepts · Crack exams · 2027</p>
+            <span class="hero-emoji">👋</span>
+            <h2>We'd Love To Hear From You!</h2>
+            <p class="hero-tagline">Questions? Suggestions? Feedback?</p>
             <div class="hero-divider"></div>
             <p class="hero-desc">
-                A free educational platform dedicated to NEET, JEE, and CBSE aspirants — bringing quality study materials, practice questions, and interactive learning to everyone.
+                Whether you have a question about study materials, want to suggest improvements, or just want to say hi — we're always happy to connect with fellow students and learners. Reach out through any of the platforms below!
             </p>
         </div>
 
-        <!-- Content card -->
-        <div class="content-card">
-            <h3><span class="num">1</span> Our Story</h3>
-            <p>
-                <strong>Aditya's Chronicles</strong> was born out of a simple idea — that <strong>quality education should be free and accessible to every student</strong>, regardless of their background, location, or financial situation.
-            </p>
-            <p>
-                As a student preparing for NEET, I realized that many brilliant aspirants struggle not because they lack potential, but because they lack proper resources. Coaching is expensive, and free materials online are often scattered, outdated, or incomplete.
-            </p>
-            <p>
-                So I decided to build this platform — a <strong>one-stop destination</strong> where students can find organized, chapter-wise study materials, practice questions, and interactive sessions, all in one place, completely free.
-            </p>
+        <!-- Contact cards -->
+        <div class="contact-section">
+            <h3>🌐 Connect With Us</h3>
+            <div class="contact-grid">
+                <a href="https://youtube.com/@adityas_chronicles?si=daa4kZ_OTSPUNebO" target="_blank" class="contact-card youtube-card">
+                    <div class="cc-icon">▶</div>
+                    <div class="cc-info">
+                        <div class="cc-title">YouTube</div>
+                        <div class="cc-desc">Watch free video sessions</div>
+                    </div>
+                    <span class="cc-arrow">→</span>
+                </a>
 
-            <h3><span class="num">2</span> Our Mission</h3>
+                <a href="https://t.me/AdityasChronicles" target="_blank" class="contact-card telegram-card">
+                    <div class="cc-icon">✈</div>
+                    <div class="cc-info">
+                        <div class="cc-title">Telegram</div>
+                        <div class="cc-desc">Join our study channel</div>
+                    </div>
+                    <span class="cc-arrow">→</span>
+                </a>
+
+                <a href="https://www.instagram.com/ai2aditya?stkn=MW95cmh2dHpqaGd0aw==" target="_blank" class="contact-card instagram-card">
+                    <div class="cc-icon">📸</div>
+                    <div class="cc-info">
+                        <div class="cc-title">Instagram</div>
+                        <div class="cc-desc">Follow for daily updates</div>
+                    </div>
+                    <span class="cc-arrow">→</span>
+                </a>
+
+                <a href="https://whatsapp.com/channel/0029Vb9NYS2A2pL68kRued2P" target="_blank" class="contact-card whatsapp-card">
+                    <div class="cc-icon">💬</div>
+                    <div class="cc-info">
+                        <div class="cc-title">WhatsApp</div>
+                        <div class="cc-desc">Get instant notifications</div>
+                    </div>
+                    <span class="cc-arrow">→</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Response time info -->
+        <div class="contact-section">
+            <h3>⏱️ Response Time</h3>
             <div class="info-box">
-                <div class="ib-title">🎯 Mission Statement</div>
-                <p>
-                    To empower every NEET, JEE, and CBSE aspirant with <strong>free, high-quality, and organized study resources</strong> — so that financial constraints never become a barrier to their dreams.
-                </p>
+                <div class="ib-title">📩 We Usually Reply Within:</div>
+                <ul>
+                    <li><strong>YouTube comments:</strong> 24–48 hours</li>
+                    <li><strong>Telegram messages:</strong> 12–24 hours</li>
+                    <li><strong>Instagram DMs:</strong> 24–48 hours</li>
+                    <li><strong>WhatsApp channel:</strong> Broadcasts only (no DMs)</li>
+                </ul>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; margin-top: 12px;">
+                Please note: Since this is a <strong>free educational platform</strong> run by a student, response times may vary during exam periods. We appreciate your patience! 🙏
+            </p>
+        </div>
+
+        <!-- FAQ section -->
+        <div class="contact-section">
+            <h3>❓ Frequently Asked Questions</h3>
+
+            <div class="faq-item">
+                <div class="faq-q">Is Aditya's Chronicles really 100% free?</div>
+                <div class="faq-a">Yes! All study materials, PDF notes, interactive sessions, and practice questions are completely free — forever. No hidden charges, no subscriptions.</div>
             </div>
 
-            <h3><span class="num">3</span> What We Offer</h3>
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <span class="fi-icon">📚</span>
-                    <div class="fi-title">Chapter-wise Notes</div>
-                    <div class="fi-desc">Organized study materials for Classes 11 & 12 — Biology, Chemistry, Physics</div>
-                </div>
-                <div class="feature-item">
-                    <span class="fi-icon">🟢</span>
-                    <div class="fi-title">Interactive Sessions</div>
-                    <div class="fi-desc">HTML-based interactive learning — visual, engaging & fun</div>
-                </div>
-                <div class="feature-item">
-                    <span class="fi-icon">📕</span>
-                    <div class="fi-title">PDF Notes</div>
-                    <div class="fi-desc">Downloadable & printable study materials for revision</div>
-                </div>
-                <div class="feature-item">
-                    <span class="fi-icon">📝</span>
-                    <div class="fi-title">Practice Questions</div>
-                    <div class="fi-desc">AI-generated questions for self-assessment & practice</div>
-                </div>
-                <div class="feature-item">
-                    <span class="fi-icon">🎯</span>
-                    <div class="fi-title">Exam-focused</div>
-                    <div class="fi-desc">Content designed specifically for NEET, JEE & CBSE patterns</div>
-                </div>
-                <div class="feature-item">
-                    <span class="fi-icon">🆓</span>
-                    <div class="fi-title">100% Free</div>
-                    <div class="fi-desc">No hidden charges, no subscriptions — free forever</div>
-                </div>
+            <div class="faq-item">
+                <div class="faq-q">Are the questions on this platform official NEET/JEE questions?</div>
+                <div class="faq-a">No. Most questions are generated using Artificial Intelligence (AI) for practice purposes only. They are not official exam questions. Always cross-verify with NCERT textbooks.</div>
             </div>
 
-            <h3><span class="num">4</span> By The Numbers</h3>
-            <div class="stats-grid">
-                <div class="stat-box">
-                    <div class="sb-num">6</div>
-                    <div class="sb-label">Subjects</div>
-                </div>
-                <div class="stat-box">
-                    <div class="sb-num">97</div>
-                    <div class="sb-label">Chapters</div>
-                </div>
-                <div class="stat-box">
-                    <div class="sb-num">FREE</div>
-                    <div class="sb-label">Forever</div>
-                </div>
-                <div class="stat-box">
-                    <div class="sb-num">2027</div>
-                    <div class="sb-label">Target</div>
-                </div>
+            <div class="faq-item">
+                <div class="faq-q">Can I download the interactive HTML sessions?</div>
+                <div class="faq-a">No. Interactive sessions are protected by anti-download measures and can only be viewed/run on the website. PDF notes, however, can be viewed freely.</div>
             </div>
 
-            <h3><span class="num">5</span> About AI-Generated Content</h3>
-            <p>
-                Many of the practice questions and tests on this platform are <strong>generated using Artificial Intelligence (AI)</strong>. We use AI to:
-            </p>
-            <ul>
-                <li>Create diverse practice questions quickly</li>
-                <li>Cover a wide range of topics and difficulty levels</li>
-                <li>Provide instant, unlimited practice for students</li>
-            </ul>
-            <p>
-                However, we want to be <strong>transparent</strong> — AI-generated content may occasionally contain errors or inaccuracies. We strongly recommend students <strong>cross-verify</strong> all answers with official NCERT textbooks and trusted sources.
-            </p>
-            <p>
-                For more details, please see our <a href="terms.html">Terms & Conditions</a> and <a href="privacy.html">Privacy Policy</a>.
-            </p>
+            <div class="faq-item">
+                <div class="faq-q">How can I suggest a new chapter or topic?</div>
+                <div class="faq-a">Reach out to us on Telegram or Instagram with your suggestion. We love hearing what students want to learn!</div>
+            </div>
 
-            <h3><span class="num">6</span> Our Values</h3>
-            <ul>
-                <li><strong>🎓 Education First:</strong> Every decision we make is for the benefit of students.</li>
-                <li><strong>💎 Quality Matters:</strong> We continuously improve our content based on feedback.</li>
-                <li><strong>🤝 Transparency:</strong> We're honest about our limitations (like AI content).</li>
-                <li><strong>🆓 Free Forever:</strong> No paywalls, no premium tiers — education for all.</li>
-                <li><strong>🚀 Constant Improvement:</strong> We keep adding new materials and features.</li>
-            </ul>
+            <div class="faq-item">
+                <div class="faq-q">I found an error in a question. What should I do?</div>
+                <div class="faq-a">Please report it on Telegram or Instagram with a screenshot. Since questions are AI-generated, your feedback helps us improve the content quality.</div>
+            </div>
 
-            <h3><span class="num">7</span> A Message to Students</h3>
+            <div class="faq-item">
+                <div class="faq-q">Can I contribute study materials to the platform?</div>
+                <div class="faq-a">Yes! If you have quality study notes or materials you'd like to share, contact us on Telegram. We'll review and credit you if published.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">Do you offer personal mentorship or doubt-solving?</div>
+                <div class="faq-a">Currently, we don't offer 1-on-1 mentorship. But you can ask doubts in our Telegram channel, and the community will help!</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">Is my data safe on this website?</div>
+                <div class="faq-a">Yes. We don't collect personal information. Please read our <a href="privacy.html" style="color: var(--primary); font-weight: 600; text-decoration: none;">Privacy Policy</a> for full details.</div>
+            </div>
+        </div>
+
+        <!-- Message from founder -->
+        <div class="contact-section">
+            <h3>💌 A Personal Note</h3>
             <div class="quote-box">
                 <div class="q-text">
-                    "Your journey to becoming a doctor or engineer is tough — but you don't have to walk it alone. This platform is my small contribution to your big dream. Study hard, stay consistent, and believe in yourself. You've got this! 💪"
+                    "Thank you for being here. Whether you're preparing for NEET, JEE, or boards — remember, every small step counts. If this platform helps even one student achieve their dream, my effort is worth it. Feel free to reach out anytime — I read every message personally. ❤️"
                 </div>
                 <div class="q-author">— Aditya, Founder</div>
             </div>
+        </div>
 
-            <h3><span class="num">8</span> Get In Touch</h3>
-            <p>
-                Have questions, suggestions, or feedback? We'd love to hear from you! Connect with us on any of these platforms:
-            </p>
-            <div class="contact-box">
-                <div class="cb-title">📬 Connect With Us</div>
-                <div class="contact-grid">
-                    <a href="https://youtube.com/@adityas_chronicles?si=daa4kZ_OTSPUNebO" target="_blank" class="contact-item">
-                        <span class="ci-icon">▶</span> YouTube
-                    </a>
-                    <a href="https://t.me/AdityasChronicles" target="_blank" class="contact-item">
-                        <span class="ci-icon">✈</span> Telegram
-                    </a>
-                    <a href="https://www.instagram.com/ai2aditya?stkn=MW95cmh2dHpqaGd0aw==" target="_blank" class="contact-item">
-                        <span class="ci-icon">📸</span> Instagram
-                    </a>
-                    <a href="https://whatsapp.com/channel/0029Vb9NYS2A2pL68kRued2P" target="_blank" class="contact-item">
-                        <span class="ci-icon">💬</span> WhatsApp
-                    </a>
-                </div>
+        <!-- Important links -->
+        <div class="contact-section">
+            <h3>🔗 Important Links</h3>
+            <div class="contact-grid">
+                <a href="about.html" class="contact-card" style="border-color: rgba(37, 99, 235, 0.15);">
+                    <div class="cc-icon" style="background: #dbeafe; color: #1d4ed8;">👋</div>
+                    <div class="cc-info">
+                        <div class="cc-title">About Us</div>
+                        <div class="cc-desc">Know our story & mission</div>
+                    </div>
+                    <span class="cc-arrow">→</span>
+                </a>
+
+                <a href="privacy.html" class="contact-card" style="border-color: rgba(37, 99, 235, 0.15);">
+                    <div class="cc-icon" style="background: #dbeafe; color: #1d4ed8;">🔒</div>
+                    <div class="cc-info">
+                        <div class="cc-title">Privacy Policy</div>
+                        <div class="cc-desc">How we handle your data</div>
+                    </div>
+                    <span class="cc-arrow">→</span>
+                </a>
+
+                <a href="terms.html" class="contact-card" style="border-color: rgba(37, 99, 235, 0.15);">
+                    <div class="cc-icon" style="background: #dbeafe; color: #1d4ed8;">📋</div>
+                    <div class="cc-info">
+                        <div class="cc-title">Terms & Conditions</div>
+                        <div class="cc-desc">Rules of using our platform</div>
+                    </div>
+                    <span class="cc-arrow">→</span>
+                </a>
+
+                <a href="index.html" class="contact-card" style="border-color: rgba(37, 99, 235, 0.15);">
+                    <div class="cc-icon" style="background: #dbeafe; color: #1d4ed8;">🏠</div>
+                    <div class="cc-info">
+                        <div class="cc-title">Home</div>
+                        <div class="cc-desc">Browse study materials</div>
+                    </div>
+                    <span class="cc-arrow">→</span>
+                </a>
             </div>
-
-            <p class="footer-note">
-                Thank you for being a part of Aditya's Chronicles. Together, let's make learning free and accessible for all. ❤️
-            </p>
         </div>
 
-        <!-- Social links -->
-        <div class="social-links">
-            <a href="https://youtube.com/@adityas_chronicles?si=daa4kZ_OTSPUNebO" target="_blank" class="social-btn youtube">▶ YouTube</a>
-            <a href="https://t.me/AdityasChronicles" target="_blank" class="social-btn telegram">✈ Telegram</a>
-            <a href="https://www.instagram.com/ai2aditya?stkn=MW95cmh2dHpqaGd0aw==" target="_blank" class="social-btn instagram">📸 Instagram</a>
-            <a href="https://whatsapp.com/channel/0029Vb9NYS2A2pL68kRued2P" target="_blank" class="social-btn whatsapp">💬 WhatsApp</a>
-        </div>
-
-        <p class="copyright">© 2026 Aditya's Chronicles · All rights reserved.</p>
+        <p class="footer-note">
+            We're always here to help. Don't hesitate to reach out — your success is our mission. 🚀
+        </p>
     </div>
+
+    <!-- Social links -->
+    <div class="social-links">
+        <a href="https://youtube.com/@adityas_chronicles?si=daa4kZ_OTSPUNebO" target="_blank" class="social-btn youtube">▶ YouTube</a>
+        <a href="https://t.me/AdityasChronicles" target="_blank" class="social-btn telegram">✈ Telegram</a>
+        <a href="https://www.instagram.com/ai2aditya?stkn=MW95cmh2dHpqaGd0aw==" target="_blank" class="social-btn instagram">📸 Instagram</a>
+        <a href="https://whatsapp.com/channel/0029Vb9NYS2A2pL68kRued2P" target="_blank" class="social-btn whatsapp">💬 WhatsApp</a>
+    </div>
+
+    <p class="copyright">© 2026 Aditya's Chronicles · All rights reserved.</p>
+
 </body>
 </html>
