@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About · Aditya's Chronicles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #f4f7fc;
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --card-border: rgba(0, 0, 0, 0.06);
+            --primary: #2563eb;
+            --accent-green: #16a34a;
+            --text: #0b1a2f;
+            --text-secondary: #1e3a5f;
+            --muted: #64748b;
+            --border: rgba(0, 0, 0, 0.07);
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 24px 56px rgba(0, 0, 0, 0.08);
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 20px;
+            --radius-xl: 24px;
+            --transition: 0.25s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            padding: 0 0 40px;
+        }
+
+        /* light orbs */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.20;
+            pointer-events: none;
+            z-index: 0;
+            animation: orbFloat 22s ease-in-out infinite;
+        }
+        .bg-orb.orb-1 { width: 500px; height: 500px; background: #bfdbfe; top: -150px; left: -150px; }
+        .bg-orb.orb-2 { width: 450px; height: 450px; background: #a7f3d0; bottom: -120px; right: -120px; animation-delay: -7s; }
+        .bg-orb.orb-3 { width: 350px; height: 350px; background: #c7d2fe; top: 40%; left: 60%; animation-delay: -14s; }
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(40px, -40px) scale(1.08); }
+            50% { transform: translate(-20px, 30px) scale(0.92); }
+            75% { transform: translate(-50px, -10px) scale(1.04); }
+        }
+        .grid-pattern {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+            background-size: 56px 56px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .app { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+
+        /* ===== HEADER ===== */
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border-radius: 40px;
+            background: white;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            text-decoration: none;
+            box-shadow: var(--shadow-sm);
+            font-family: inherit;
+        }
+        .back-btn:hover {
+            border-color: var(--primary);
+            background: #f8faff;
+            transform: translateX(-4px);
+            box-shadow: var(--shadow-md);
+            color: var(--primary);
+        }
+
+        .title-block {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 18px 0 24px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--border);
+        }
+        .title-block .icon {
+            font-size: 2.4rem;
+            filter: drop-shadow(0 2px 12px rgba(37, 99, 235, 0.15));
+        }
+        .title-block h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            color: var(--text);
+            line-height: 1.2;
+        }
+        .title-block p {
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-style: italic;
+            margin-top: 2px;
+        }
+
+        /* ===== HERO CARD ===== */
+        .hero-card {
+            background: linear-gradient(145deg, #ffffff, #f8faff);
+            border-radius: var(--radius-lg);
+            padding: 32px 28px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            text-align: center;
+            margin-bottom: 22px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-card .hero-icon {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.25);
+            margin-bottom: 14px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-card h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            background: linear-gradient(145deg, #1e4ed8, #0d9488, #16a34a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-card .hero-tagline {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-card .hero-divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #2563eb, #0891b2, #16a34a);
+            margin: 14px auto;
+            border-radius: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-card .hero-desc {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== CONTENT CARD ===== */
+        .content-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 32px 28px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+        }
+        .content-card h3 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-top: 24px;
+            margin-bottom: 12px;
+            letter-spacing: -0.2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .content-card h3:first-child { margin-top: 0; }
+        .content-card h3 .num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 8px;
+            background: #dbeafe;
+            color: #1d4ed8;
+            font-size: 0.75rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        .content-card p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            margin-bottom: 12px;
+        }
+        .content-card ul {
+            padding-left: 20px;
+            margin-bottom: 14px;
+        }
+        .content-card ul li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            margin-bottom: 6px;
+        }
+        .content-card a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .content-card a:hover { text-decoration: underline; }
+
+        /* Feature grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 16px 0;
+        }
+        @media (max-width: 500px) {
+            .feature-grid { grid-template-columns: 1fr; }
+        }
+        .feature-item {
+            background: linear-gradient(145deg, #f8faff, #eff6ff);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 16px 18px;
+            transition: var(--transition);
+        }
+        .feature-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary);
+        }
+        .feature-item .fi-icon {
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .feature-item .fi-title {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 3px;
+        }
+        .feature-item .fi-desc {
+            font-size: 0.78rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        /* Stats grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 16px 0;
+        }
+        @media (max-width: 600px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        .stat-box {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 18px 10px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+        .stat-box:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary);
+        }
+        .stat-box .sb-num {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(145deg, #2563eb, #0d9488);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+        .stat-box .sb-label {
+            font-size: 0.65rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 700;
+            margin-top: 6px;
+        }
+
+        /* Info box - blue */
+        .info-box {
+            background: linear-gradient(145deg, #dbeafe, #bfdbfe);
+            border-left: 4px solid #2563eb;
+            border-radius: var(--radius-sm);
+            padding: 18px 20px;
+            margin: 14px 0;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+        }
+        .info-box .ib-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #1e3a8a;
+            margin-bottom: 10px;
+        }
+        .info-box p {
+            color: #1e3a8a;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        .info-box ul li { color: #1e3a8a; font-weight: 500; }
+
+        /* Quote box */
+        .quote-box {
+            background: linear-gradient(145deg, #f0fdf4, #dcfce7);
+            border-left: 4px solid #16a34a;
+            border-radius: var(--radius-sm);
+            padding: 20px 22px;
+            margin: 16px 0;
+            box-shadow: 0 4px 12px rgba(22, 163, 74, 0.08);
+            text-align: center;
+        }
+        .quote-box .q-text {
+            font-size: 0.95rem;
+            font-style: italic;
+            color: #14532d;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+        .quote-box .q-author {
+            font-size: 0.78rem;
+            color: #15803d;
+            margin-top: 8px;
+            font-weight: 700;
+        }
+
+        /* Contact box */
+        .contact-box {
+            background: linear-gradient(145deg, #f8faff, #eff6ff);
+            border-radius: var(--radius-md);
+            padding: 20px 22px;
+            border: 1px solid var(--border);
+            margin-top: 16px;
+        }
+        .contact-box .cb-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        @media (max-width: 500px) {
+            .contact-grid { grid-template-columns: 1fr; }
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.82rem;
+            transition: var(--transition);
+        }
+        .contact-item:hover {
+            transform: translateX(4px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+        .contact-item .ci-icon {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .footer-note {
+            margin-top: 28px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* Footer social */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 32px;
+        }
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.6);
+            color: var(--text);
+            box-shadow: var(--shadow-sm);
+        }
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            color: white;
+        }
+        .social-btn.youtube:hover { background: #ff0000; border-color: #ff0000; }
+        .social-btn.telegram:hover { background: #0088cc; border-color: #0088cc; }
+        .social-btn.instagram:hover { background: #e4405f; border-color: #e4405f; }
+        .social-btn.whatsapp:hover { background: #25d366; border-color: #25d366; }
+
+        .copyright {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        /* Mobile */
+        @media (max-width: 480px) {
+            .app { padding: 16px 14px; }
+            .title-block h1 { font-size: 1.4rem; }
+            .title-block .icon { font-size: 1.9rem; }
+            .hero-card { padding: 24px 20px; border-radius: var(--radius-md); }
+            .hero-card .hero-icon { width: 74px; height: 74px; }
+            .hero-card h2 { font-size: 1.25rem; }
+            .hero-card .hero-desc { font-size: 0.82rem; }
+            .content-card { padding: 22px 18px; border-radius: var(--radius-md); }
+            .content-card h3 { font-size: 0.95rem; }
+            .content-card p, .content-card ul li { font-size: 0.82rem; }
+            .info-box, .quote-box, .contact-box { padding: 14px 16px; }
+            .feature-item { padding: 14px 16px; }
+            .stat-box { padding: 14px 8px; }
+            .stat-box .sb-num { font-size: 1.25rem; }
+            .social-btn { padding: 6px 14px; font-size: 0.72rem; }
+            .back-btn { font-size: 0.78rem; padding: 6px 16px; }
+            .contact-item { font-size: 0.78rem; padding: 8px 12px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background effects -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+    <div class="grid-pattern"></div>
+
+    <div class="app">
+        <!-- Back button -->
+        <a href="index.html" class="back-btn">← Back to Home</a>
+
+        <!-- Title -->
+        <div class="title-block">
+            <span class="icon">👋</span>
+            <div>
+                <h1>About Us</h1>
+                <p>Aditya's Chronicles — Our story</p>
+            </div>
+        </div>
+
+        <!-- Hero card -->
+        <div class="hero-card">
+            <img 
+                src="https://yt3.googleusercontent.com/FzSAOpFaOKkqMw8Y2JG-7HwXqj743Zdszi4XVmwIwnKtbmMAGTUrb_0Pn-J7-idUWDxYAtY0Q6o=s160-c-k-c0x00ffffff-no-rj" 
+                alt="Aditya's Chronicles" 
+                class="hero-icon"
+                onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%A9%BA%3C/text%3E%3C/svg%3E';"
+            />
+            <h2>Aditya's Chronicles</h2>
+            <p class="hero-tagline">Clear concepts · Crack exams · 2027</p>
+            <div class="hero-divider"></div>
+            <p class="hero-desc">
+                A free educational platform dedicated to NEET, JEE, and CBSE aspirants — bringing quality study materials, practice questions, and interactive learning to everyone.
+            </p>
+        </div>
+
+        <!-- Content card -->
+        <div class="content-card">
+            <h3><span class="num">1</span> Our Story</h3>
+            <p>
+                <strong>Aditya's Chronicles</strong> was born out of a simple idea — that <strong>quality education should be free and accessible to every student</strong>, regardless of their background, location, or financial situation.
+            </p>
+            <p>
+                As a student preparing for NEET, I realized that many brilliant aspirants struggle not because they lack potential, but because they lack proper resources. Coaching is expensive, and free materials online are often scattered, outdated, or incomplete.
+            </p>
+            <p>
+                So I decided to build this platform — a <strong>one-stop destination</strong> where students can find organized, chapter-wise study materials, practice questions, and interactive sessions, all in one place, completely free.
+            </p>
+
+            <h3><span class="num">2</span> Our Mission</h3>
+            <div class="info-box">
+                <div class="ib-title">🎯 Mission Statement</div>
+                <p>
+                    To empower every NEET, JEE, and CBSE aspirant with <strong>free, high-quality, and organized study resources</strong> — so that financial constraints never become a barrier to their dreams.
+                </p>
+            </div>
+
+            <h3><span class="num">3</span> What We Offer</h3>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <span class="fi-icon">📚</span>
+                    <div class="fi-title">Chapter-wise Notes</div>
+                    <div class="fi-desc">Organized study materials for Classes 11 & 12 — Biology, Chemistry, Physics</div>
+                </div>
+                <div class="feature-item">
+                    <span class="fi-icon">🟢</span>
+                    <div class="fi-title">Interactive Sessions</div>
+                    <div class="fi-desc">HTML-based interactive learning — visual, engaging & fun</div>
+                </div>
+                <div class="feature-item">
+                    <span class="fi-icon">📕</span>
+                    <div class="fi-title">PDF Notes</div>
+                    <div class="fi-desc">Downloadable & printable study materials for revision</div>
+                </div>
+                <div class="feature-item">
+                    <span class="fi-icon">📝</span>
+                    <div class="fi-title">Practice Questions</div>
+                    <div class="fi-desc">AI-generated questions for self-assessment & practice</div>
+                </div>
+                <div class="feature-item">
+                    <span class="fi-icon">🎯</span>
+                    <div class="fi-title">Exam-focused</div>
+                    <div class="fi-desc">Content designed specifically for NEET, JEE & CBSE patterns</div>
+                </div>
+                <div class="feature-item">
+                    <span class="fi-icon">🆓</span>
+                    <div class="fi-title">100% Free</div>
+                    <div class="fi-desc">No hidden charges, no subscriptions — free forever</div>
+                </div>
+            </div>
+
+            <h3><span class="num">4</span> By The Numbers</h3>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="sb-num">6</div>
+                    <div class="sb-label">Subjects</div>
+                </div>
+                <div class="stat-box">
+                    <div class="sb-num">97</div>
+                    <div class="sb-label">Chapters</div>
+                </div>
+                <div class="stat-box">
+                    <div class="sb-num">FREE</div>
+                    <div class="sb-label">Forever</div>
+                </div>
+                <div class="stat-box">
+                    <div class="sb-num">2027</div>
+                    <div class="sb-label">Target</div>
+                </div>
+            </div>
+
+            <h3><span class="num">5</span> About AI-Generated Content</h3>
+            <p>
+                Many of the practice questions and tests on this platform are <strong>generated using Artificial Intelligence (AI)</strong>. We use AI to:
+            </p>
+            <ul>
+                <li>Create diverse practice questions quickly</li>
+                <li>Cover a wide range of topics and difficulty levels</li>
+                <li>Provide instant, unlimited practice for students</li>
+            </ul>
+            <p>
+                However, we want to be <strong>transparent</strong> — AI-generated content may occasionally contain errors or inaccuracies. We strongly recommend students <strong>cross-verify</strong> all answers with official NCERT textbooks and trusted sources.
+            </p>
+            <p>
+                For more details, please see our <a href="terms.html">Terms & Conditions</a> and <a href="privacy.html">Privacy Policy</a>.
+            </p>
+
+            <h3><span class="num">6</span> Our Values</h3>
+            <ul>
+                <li><strong>🎓 Education First:</strong> Every decision we make is for the benefit of students.</li>
+                <li><strong>💎 Quality Matters:</strong> We continuously improve our content based on feedback.</li>
+                <li><strong>🤝 Transparency:</strong> We're honest about our limitations (like AI content).</li>
+                <li><strong>🆓 Free Forever:</strong> No paywalls, no premium tiers — education for all.</li>
+                <li><strong>🚀 Constant Improvement:</strong> We keep adding new materials and features.</li>
+            </ul>
+
+            <h3><span class="num">7</span> A Message to Students</h3>
+            <div class="quote-box">
+                <div class="q-text">
+                    "Your journey to becoming a doctor or engineer is tough — but you don't have to walk it alone. This platform is my small contribution to your big dream. Study hard, stay consistent, and believe in yourself. You've got this! 💪"
+                </div>
+                <div class="q-author">— Aditya, Founder</div>
+            </div>
+
+            <h3><span class="num">8</span> Get In Touch</h3>
+            <p>
+                Have questions, suggestions, or feedback? We'd love to hear from you! Connect with us on any of these platforms:
+            </p>
+            <div class="contact-box">
+                <div class="cb-title">📬 Connect With Us</div>
+                <div class="contact-grid">
+                    <a href="https://youtube.com/@adityas_chronicles?si=daa4kZ_OTSPUNebO" target="_blank" class="contact-item">
+                        <span class="ci-icon">▶</span> YouTube
+                    </a>
+                    <a href="https://t.me/AdityasChronicles" target="_blank" class="contact-item">
+                        <span class="ci-icon">✈</span> Telegram
+                    </a>
+                    <a href="https://www.instagram.com/ai2aditya?stkn=MW95cmh2dHpqaGd0aw==" target="_blank" class="contact-item">
+                        <span class="ci-icon">📸</span> Instagram
+                    </a>
+                    <a href="https://whatsapp.com/channel/0029Vb9NYS2A2pL68kRued2P" target="_blank" class="contact-item">
+                        <span class="ci-icon">💬</span> WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <p class="footer-note">
+                Thank you for being a part of Aditya's Chronicles. Together, let's make learning free and accessible for all. ❤️
+            </p>
+        </div>
+
+        <!-- Social links -->
+        <div class="social-links">
+            <a href="https://youtube.com/@adityas_chronicles?si=daa4kZ_OTSPUNebO" target="_blank" class="social-btn youtube">▶ YouTube</a>
+            <a href="https://t.me/AdityasChronicles" target="_blank" class="social-btn telegram">✈ Telegram</a>
+            <a href="https://www.instagram.com/ai2aditya?stkn=MW95cmh2dHpqaGd0aw==" target="_blank" class="social-btn instagram">📸 Instagram</a>
+            <a href="https://whatsapp.com/channel/0029Vb9NYS2A2pL68kRued2P" target="_blank" class="social-btn whatsapp">💬 WhatsApp</a>
+        </div>
+
+        <p class="copyright">© 2026 Aditya's Chronicles · All rights reserved.</p>
+    </div>
+</body>
+</html>
